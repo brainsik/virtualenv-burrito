@@ -1,6 +1,10 @@
-## What ##
+# Virtualenv Burrito #
 
 With one command, have a working virtualenv + virtualenvwrapper environment.
+
+## Usage ##
+
+    curl -s https://github.com/brainsik/virtualenv-burrito/raw/master/virtualenv-burrito.sh | bash
 
 ## Why ##
 
@@ -16,7 +20,3 @@ MacPorts, and more.
 ## Caveat emptor ##
 
 This simple script is meant for people who do not have virtualenv installed.
-
-## Usage ##
-
-    curl -s https://github.com/brainsik/virtualenv-burrito/raw/master/virtualenv-burrito.sh | bash
