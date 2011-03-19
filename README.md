@@ -10,6 +10,9 @@ environment.
 
 ## Usage
 
+See the [virtualenvwrapper quickstart](http://www.doughellmann.com/docs/virtualenvwrapper/install.html#quick-start)
+or read the [virtualenvwrapper command reference](http://www.doughellmann.com/docs/virtualenvwrapper/command_ref.html).
+
 To create a new virtualenv:
 
     mkvirtualenv newname
@@ -21,10 +24,6 @@ To use a previously created virtualenv:
 Once the virtualenv is activated, you can pip install (without using sudo)
 whatever Python packages you want and they'll only be available in that
 virtualenv.
-
-Those commands are from [Doug Hellman](http://www.doughellmann.com/)'s excellent virtualenvwrapper. To learn
-more, see his [virtualenvwrapper quickstart](http://www.doughellmann.com/docs/virtualenvwrapper/install.html#quick-start)
-or read the [virtualenvwrapper command reference](http://www.doughellmann.com/docs/virtualenvwrapper/command_ref.html).
 
 ## Why
 
