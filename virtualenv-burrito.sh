@@ -6,9 +6,9 @@
 #
 set -e
 
+DISTRIBUTE_URL="http://pypi.python.org/packages/source/d/distribute/distribute-0.6.15.tar.gz"
 VIRTUALENV_URL="http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.5.2.tar.gz"
 VIRTUALENVWRAPPER_URL="http://pypi.python.org/packages/source/v/virtualenvwrapper/virtualenvwrapper-2.6.3.tar.gz"
-DISTRIBUTE_URL="http://pypi.python.org/packages/source/d/distribute/distribute-0.6.15.tar.gz"
 
 VENVBURRITO="$HOME/.venvburrito"
 VENVBURRITO_esc="\$HOME/.venvburrito"
