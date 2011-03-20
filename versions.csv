@@ -1,3 +1,3 @@
 __venvburrito,1.0,https://github.com/brainsik/virtualenv-burrito/raw/master/venvburrito.py,de603938b848749120edb3e31aec72389882a299
-virtualenv,1.5.2,http://pypi.python.odrg/packages/source/v/virtualenv/virtualenv-1.5.2.tar.gz,fac8b7d96602b1cb0964534317d78e336aa25d9b
+virtualenv,1.5.2,http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.5.2.tar.gz,fac8b7d96602b1cb0964534317d78e336aa25d9b
 virtualenvwrapper,2.6.3,http://pypi.python.org/packages/source/v/virtualenvwrapper/virtualenvwrapper-2.6.3.tar.gz,7e60f074070bf73b15651596be4fafff0c1b71c7
