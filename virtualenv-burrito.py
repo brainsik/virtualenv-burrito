@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 #
-#   venvburrito — manages the Virtualenv Burrito environment
+#   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
 __version__ = "1.0"
@@ -74,14 +74,14 @@ def download(url, digest):
 
 def self_update(src):
     """Copy src to our destination and exec the new script."""
-    dst = os.path.join(VENVBURRITO, "bin", "venvburrito")
+    dst = os.path.join(VENVBURRITO, "bin", "virtualenv-burrito")
     shutil.copyfile(src, dst)
     os.remove(src)
     os.chmod(dst, 0755)
     print "  Restarting!\n"
     sys.stdout.flush()
     # pass "noself" so we don't accidentally loop infinitely
-    os.execl(dst, "venvburrito", "update", "no-selfcheck")
+    os.execl(dst, "virtualenv-burrito", "update", "no-selfcheck")
 
 
 def update_pkg(filename, name, version):
@@ -122,7 +122,7 @@ def check_versions(selfcheck=True):
 
     needs_update = {}
     for name, version, url, digest in reader:
-        if name == '__venvburrito':
+        if name == '_virtualenv-burrito':
             if not selfcheck:
                 continue
             name = NAME

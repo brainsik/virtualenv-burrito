@@ -8,7 +8,7 @@ set -e
 
 VENVBURRITO="$HOME/.venvburrito"
 VENVBURRITO_esc="\$HOME/.venvburrito"
-GITHUB_URL="https://github.com/brainsik/virtualenv-burrito/raw/master"
+MASTER_URL="https://github.com/brainsik/virtualenv-burrito/raw/master"
 
 kernel=$(uname -s)
 case "$kernel" in
@@ -27,11 +27,11 @@ fi
 test -d $VENVBURRITO || mkdir -p $VENVBURRITO/{bin,lib}
 test -d $HOME/.virtualenvs || mkdir $HOME/.virtualenvs
 
-echo "Downloading venvburrito command"
-curl $GITHUB_URL/venvburrito.py > $VENVBURRITO/bin/venvburrito
-chmod 755 $VENVBURRITO/bin/venvburrito
-echo -e "\nRunning: venvburrito update"
-$VENVBURRITO/bin/venvburrito update
+echo "Downloading virtualenv-burrito command"
+curl $MASTER_URL/virtualenv-burrito.py > $VENVBURRITO/bin/virtualenv-burrito
+chmod 755 $VENVBURRITO/bin/virtualenv-burrito
+echo -e "\nRunning: virtualenv-burrito update"
+$VENVBURRITO/bin/virtualenv-burrito update
 echo
 
 # create the virtualenv "binary"
