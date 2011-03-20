@@ -21,7 +21,7 @@ esac
 
 if [ -s "$HOME/.bash_profile" ]; then
     if grep -q "$VENVBURRITO_esc/startup.sh" $HOME/.bash_profile; then
-        echo "Looks like virtualenv-now is already installed. Bye."
+        echo "Looks like virtualenv-burrito is already installed. Bye."
         exit 1
     fi
 fi
@@ -31,9 +31,9 @@ test -d $VENVBURRITO || mkdir -p $VENVBURRITO/{bin,lib}
 test -d $HOME/.virtualenvs || mkdir $HOME/.virtualenvs
 
 if [ "$kernel" == "Linux" ]; then
-    tmpdir=$(mktemp -d -t venvnow.XXXXXXXXXX)
+    tmpdir=$(mktemp -d -t venvburrito.XXXXXXXXXX)
 else
-    tmpdir=$(mktemp -d -t venvnow)
+    tmpdir=$(mktemp -d -t venvburrito)
 fi
 
 curl="curl"
@@ -91,13 +91,13 @@ if ! [ -e $VENVBURRITO_esc/.firstrun ]; then
 fi
 EOF
 
-# startup virtualenv-now in the bash_profile
+# startup virtualenv-burrito in the bash_profile
 if [ -s "$HOME/.bash_profile" ]; then
     if ! grep -q "$VENVBURRITO_esc/startup.sh" $HOME/.bash_profile; then
-        echo -e "\n\n# startup virtualenv-now\n. $VENVBURRITO_esc/startup.sh" >> ~/.bash_profile
+        echo -e "\n\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh" >> ~/.bash_profile
     fi
 else
-    echo -e "# run .bashrc\n. ~/.bashrc\n\n# startup virtualenv-now\n. $VENVBURRITO_esc/startup.sh" > ~/.bash_profile
+    echo -e "# run .bashrc\n. ~/.bashrc\n\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh" > ~/.bash_profile
 fi
 
 echo
