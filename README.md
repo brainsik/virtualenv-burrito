@@ -21,7 +21,7 @@ To use a previously created virtualenv:
 
     workon somename
 
-Once the virtualenv is activated, you can pip install (without using sudo)
+Once the virtualenv is activated, you can pip install (_without_ using sudo)
 whatever Python packages you want and they'll only be available in that
 virtualenv.
 

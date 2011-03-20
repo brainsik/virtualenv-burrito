@@ -52,12 +52,12 @@ ln -snf $(basename $distribute)/pkg_resources.py .
 
 tar xfz $tmpdir/virtualenv.tar.gz
 virtualenv=$(ls -dt1 $VENVBURRITO/lib/virtualenv-* | head -n1)
-ln -snf $(basename $virtualenv) $VENVBURRITO/lib/virtualenv
+ln -snf $(basename $virtualenv) virtualenv
 
 tar xfz $tmpdir/virtualenvwrapper.tar.gz
 virtualenvwrapper=$(ls -dt1 $VENVBURRITO/lib/virtualenvwrapper-* | head -n1)
 ln -snf $(basename $virtualenvwrapper)/virtualenvwrapper.sh .
-ln -snf $(basename $virtualenvwrapper)/virtualenvwrapper $VENVBURRITO/lib/virtualenvwrapper
+ln -snf $(basename $virtualenvwrapper)/virtualenvwrapper virtualenvwrapper
 
 popd >/dev/null
 rm -rf $tmpdir
@@ -94,7 +94,7 @@ EOF
 # startup virtualenv-burrito in the bash_profile
 if [ -s "$HOME/.bash_profile" ]; then
     if ! grep -q "$VENVBURRITO_esc/startup.sh" $HOME/.bash_profile; then
-        echo -e "\n\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh" >> ~/.bash_profile
+        echo -e "\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh" >> ~/.bash_profile
     fi
 else
     echo -e "# run .bashrc\n. ~/.bashrc\n\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh" > ~/.bash_profile
