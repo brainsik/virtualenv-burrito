@@ -6,17 +6,14 @@
 #
 set -e
 
-DISTRIBUTE_URL="http://pypi.python.org/packages/source/d/distribute/distribute-0.6.15.tar.gz"
-VIRTUALENV_URL="http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.5.2.tar.gz"
-VIRTUALENVWRAPPER_URL="http://pypi.python.org/packages/source/v/virtualenvwrapper/virtualenvwrapper-2.6.3.tar.gz"
-
 VENVBURRITO="$HOME/.venvburrito"
 VENVBURRITO_esc="\$HOME/.venvburrito"
+GITHUB_URL="https://github.com/brainsik/virtualenv-burrito/raw/master"
 
 kernel=$(uname -s)
 case "$kernel" in
     Darwin|Linux) ;;
-    *) echo "Sadly, we don't support $kernel. :'("; exit 1
+    *) echo "Sadly, $kernel hasn't been tested. :'("; exit 1
 esac
 
 if [ -s "$HOME/.bash_profile" ]; then
@@ -30,37 +27,12 @@ fi
 test -d $VENVBURRITO || mkdir -p $VENVBURRITO/{bin,lib}
 test -d $HOME/.virtualenvs || mkdir $HOME/.virtualenvs
 
-if [ "$kernel" == "Linux" ]; then
-    tmpdir=$(mktemp -d -t venvburrito.XXXXXXXXXX)
-else
-    tmpdir=$(mktemp -d -t venvburrito)
-fi
-
-curl="curl"
-echo -e "\nDownloading distribute …"
-$curl $DISTRIBUTE_URL > $tmpdir/distribute.tar.gz
-echo -e "\nDownloading virtualenv …"
-$curl $VIRTUALENV_URL > $tmpdir/virtualenv.tar.gz
-echo -e "\nDownloading virtualenvwrapper …"
-$curl $VIRTUALENVWRAPPER_URL > $tmpdir/virtualenvwrapper.tar.gz
-
-pushd $VENVBURRITO/lib >/dev/null
-
-tar xfz $tmpdir/distribute.tar.gz
-distribute=$(ls -dt1 $VENVBURRITO/lib/distribute-* | head -n1)
-ln -snf $(basename $distribute)/pkg_resources.py .
-
-tar xfz $tmpdir/virtualenv.tar.gz
-virtualenv=$(ls -dt1 $VENVBURRITO/lib/virtualenv-* | head -n1)
-ln -snf $(basename $virtualenv) virtualenv
-
-tar xfz $tmpdir/virtualenvwrapper.tar.gz
-virtualenvwrapper=$(ls -dt1 $VENVBURRITO/lib/virtualenvwrapper-* | head -n1)
-ln -snf $(basename $virtualenvwrapper)/virtualenvwrapper.sh .
-ln -snf $(basename $virtualenvwrapper)/virtualenvwrapper virtualenvwrapper
-
-popd >/dev/null
-rm -rf $tmpdir
+echo "Downloading venvburrito command"
+curl $GITHUB_URL/venvburrito.py > $VENVBURRITO/bin/venvburrito
+chmod 755 $VENVBURRITO/bin/venvburrito
+echo -e "\nRunning: venvburrito update"
+$VENVBURRITO/bin/venvburrito update
+echo
 
 # create the virtualenv "binary"
 cat >$VENVBURRITO/bin/virtualenv <<EOF
