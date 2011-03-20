@@ -102,6 +102,7 @@ def update_pkg(filename, name, version):
             sh("ln -snf %s/virtualenvwrapper.sh ." % realname)
             sh("ln -snf %s/virtualenvwrapper ." % realname)
         elif name == 'distribute':
+            sh("ln -snf %s distribute")
             sh("ln -snf %s/pkg_resources.py ." % realname)
         else:
             raise NotImplementedError("No clue what %s is!" % name)
