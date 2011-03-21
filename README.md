@@ -1,7 +1,7 @@
 # Virtualenv Burrito
 
-With one command, have a working [virtualenv](http://www.virtualenv.org/) +
-[virtualenvwrapper](http://www.doughellmann.com/projects/virtualenvwrapper/)
+With one command, have a working [virtualenv](http://pypi.python.org/pypi/virtualenv) +
+[virtualenvwrapper](http://pypi.python.org/pypi/virtualenvwrapper)
 environment.
 
 ## Install
@@ -41,7 +41,7 @@ To get Python coders coding.
 
 Virtualenv Burrito was inspired by
 [Pycon sprinters](http://us.pycon.org/2011/sprints/) who wasted time getting
-virtualenv setup so they could start hacking on code. It's depressingly
+virtualenv setup so they could start hacking on code. It's sadly
 complicated to quickly setup the wonderful virtualenv + virtualenvwrapper
 environment. Depending on your system you may end up yak shaving with
 setuptools, distribute, virtualenv, virtulenvwrapper, .bashrc, PyPI,
@@ -50,15 +50,23 @@ apt-get/MacPorts, and more.
 A second feature is the ability to upgrade to newer versions of virtualenv and
 virtualenvwrapper with a single command.
 
+## Limitations
+
+Currently, [extension
+points](http://www.doughellmann.com/docs/virtualenvwrapper/plugins.html#extension-points)
+(e.g., postactivate) are not supported. While this doesn't affect the project
+goal of getting people coding quickly, it's a cool feature, and (more
+importantly) I need it for work. :-) I'll be adding support soon and making it
+available via `virtualenv-burrito upgrade`.
+
 ## Caveat emptor
 
 This simple script is meant for people who do not have virtualenv installed.
 
 ## Credits
 
-All the hard work was done by the creators of virtualenv and virtualenvwrapper.
-
-Virtualenv is written and maintained by [Ian Bicking](ianbicking.org/).
-
-Virtualenvwrapper is written and maintained by
-[Doug Hellman](http://www.doughellmann.com/).
+The real hard work is done by the creators of
+[Virtualenv](http://www.virtualenv.org/) and
+[Virtualenvwrapper](http://www.doughellmann.com/projects/virtualenvwrapper/).
+Virtualenv is maintained by [Ian Bicking](ianbicking.org/). Virtualenvwrapper
+is maintained by [Doug Hellman](http://www.doughellmann.com/).
