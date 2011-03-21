@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "1.0"
+__version__ = "1.1"
 
 import sys
 import os
@@ -72,7 +72,7 @@ def download(url, digest):
     raise SystemExit(1)
 
 
-def self_update(src):
+def selfupdate(src):
     """Copy src to our destination and exec the new script."""
     dst = os.path.join(VENVBURRITO, "bin", "virtualenv-burrito")
     shutil.copyfile(src, dst)
@@ -81,10 +81,10 @@ def self_update(src):
     print "  Restarting!\n"
     sys.stdout.flush()
     # pass "noself" so we don't accidentally loop infinitely
-    os.execl(dst, "virtualenv-burrito", "update", "no-selfcheck")
+    os.execl(dst, "virtualenv-burrito", "upgrade", "no-selfcheck")
 
 
-def update_pkg(filename, name, version):
+def upgrade_package(filename, name, version):
     """Unpacks and symlinks."""
     try:
         owd = os.getcwd()
@@ -111,7 +111,7 @@ def update_pkg(filename, name, version):
 
 
 def check_versions(selfcheck=True):
-    """Return dict of packages needing upgrade."""
+    """Return dict of packages which can be upgraded."""
     try:
         fp = urllib2.urlopen(VERSIONS_URL)
     except Exception, e:
@@ -120,7 +120,7 @@ def check_versions(selfcheck=True):
         raise SystemExit(1)
     reader = csv.reader(fp)
 
-    needs_update = {}
+    has_update = {}
     for name, version, url, digest in reader:
         if name == '_virtualenv-burrito':
             if not selfcheck:
@@ -131,40 +131,40 @@ def check_versions(selfcheck=True):
             current = get_installed_version(name)
 
         if not current or version != current:
-            print "+ %s needs update (%s -> %s)" % (name, current, version)
-            needs_update[name] = (version, url, digest)
+            print "+ %s will upgrade (%s -> %s)" % (name, current, version)
+            has_update[name] = (version, url, digest)
             if name == NAME:
                 break
 
-    return needs_update
+    return has_update
 
 
-def update(selfcheck=True):
-    """Handles the update command."""
-    needs_update = check_versions(selfcheck)
-    if not needs_update:
+def handle_upgrade(selfcheck=True):
+    """Handles the upgrade command."""
+    has_update = check_versions(selfcheck)
+    if not has_update:
         print "Everything is up to date."
         raise SystemExit(0)
 
     # update ourself first
-    if NAME in needs_update:
+    if NAME in has_update:
         print "* Upgrading ourself …"
         filename = None
-        url, digest = needs_update[NAME][1:]
+        url, digest = has_update[NAME][1:]
         try:
             filename = download(url, digest)
-            self_update(filename)  # calls os.exec
+            selfupdate(filename)  # calls os.exec
         finally:
             if filename and os.path.exists(filename):
                 os.remove(filename)
 
-    for name in needs_update:
+    for name in has_update:
         filename = None
-        version, url, digest = needs_update[name]
+        version, url, digest = has_update[name]
         print "* Upgrading %s …" % name
         try:
             filename = download(url, digest)
-            update_pkg(filename, name, version)
+            upgrade_package(filename, name, version)
         finally:
             if filename and os.path.exists(filename):
                 os.remove(filename)
@@ -173,7 +173,7 @@ def update(selfcheck=True):
 
 
 def usage(returncode=1):
-    print "Use like this:\n\t%s update" % NAME
+    print "Use like this:\n\t%s upgrade" % NAME
     raise SystemExit(returncode)
 
 
@@ -181,14 +181,14 @@ def main(argv):
     if len(argv) < 2:
         usage()
 
-    if argv[1] == 'help':
+    if argv[1] in ['help', '--help', '-h', '-?']:
         usage(returncode=0)
 
-    if argv[1] == 'update':
+    if argv[1] in ['upgrade', 'update']:
         if len(argv) > 2 and argv[2] == 'no-selfcheck':
-            update(selfcheck=False)
+            handle_upgrade(selfcheck=False)
         else:
-            update()
+            handle_upgrade()
     else:
         usage()
 
