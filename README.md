@@ -39,10 +39,11 @@ To upgrade to the latest virtualenv + virtualenvwrapper packages:
 
 To get Python coders coding.
 
-Virtualenv Burrito was inspired by Pycon sprinters who wasted time getting
+Virtualenv Burrito was inspired by
+[Pycon sprinters](http://us.pycon.org/2011/sprints/) who wasted time getting
 virtualenv setup so they could start hacking on code. It's depressingly
 complicated to quickly setup the wonderful virtualenv + virtualenvwrapper
-environment. Depending on your system you may end up dicking around with
+environment. Depending on your system you may end up yak shaving with
 setuptools, distribute, virtualenv, virtulenvwrapper, .bashrc, PyPI,
 apt-get/MacPorts, and more.
 
