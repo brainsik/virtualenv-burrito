@@ -30,8 +30,8 @@ test -d $HOME/.virtualenvs || mkdir $HOME/.virtualenvs
 echo "Downloading virtualenv-burrito command"
 curl $MASTER_URL/virtualenv-burrito.py > $VENVBURRITO/bin/virtualenv-burrito
 chmod 755 $VENVBURRITO/bin/virtualenv-burrito
-echo -e "\nRunning: virtualenv-burrito update"
-$VENVBURRITO/bin/virtualenv-burrito update
+echo -e "\nRunning: virtualenv-burrito upgrade"
+$VENVBURRITO/bin/virtualenv-burrito upgrade
 echo
 
 # create the virtualenv "binary"
