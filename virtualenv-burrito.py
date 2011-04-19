@@ -29,7 +29,7 @@ except ImportError:
 
 NAME = os.path.basename(__file__)
 VENVBURRITO = os.path.join(os.environ['HOME'], ".venvburrito")
-VERSIONS_URL = "https://github.com/brainsik/virtualenv-burrito/raw/master/versions.csv"
+VERSIONS_URL = "https://github.com/brainsik/virtualenv-burrito/raw/experimental/versions.csv"
 
 symlink_search = re.compile('^.+/lib/([^/]+)').search
 
