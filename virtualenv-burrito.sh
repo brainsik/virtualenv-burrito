@@ -29,7 +29,7 @@ if [ -s "$HOME/.bash_profile" ]; then
 fi
 
 
-test -d $VENVBURRITO || mkdir -p $VENVBURRITO/bin
+test -d $VENVBURRITO || mkdir -p $VENVBURRITO/{bin,lib/python}
 test -d $HOME/.virtualenvs || mkdir $HOME/.virtualenvs
 
 echo "Downloading virtualenv-burrito command"
