@@ -104,8 +104,11 @@ def upgrade_package(filename, name, version):
            % (sys.executable, VENVBURRITO))
         if name == 'virtualenv':
             # keep virtualenv from using a specific Python interpreter
-            sh("perl -i -pe 's|^#!.*|#!/usr/bin/env python|' %s"
-               % os.path.join(VENVBURRITO, "bin", "virtualenv"))
+            print "  Fixing bin/virtualenv"
+            cmd = ("perl -i -pe 's|^#!.*|#!/usr/bin/env python|' %s"
+                   % os.path.join(VENVBURRITO, "bin", "virtualenv"))
+            print cmd
+            print sh(cmd)
     finally:
         os.chdir(owd or VENVBURRITO)
         shutil.rmtree(tmp)
