@@ -24,7 +24,7 @@ if [ -s "$HOME/.bash_profile" ]; then
 fi
 
 
-test -d $VENVBURRITO || mkdir -p $VENVBURRITO/{bin,lib}
+test -d $VENVBURRITO || mkdir -p $VENVBURRITO/bin
 test -d $HOME/.virtualenvs || mkdir $HOME/.virtualenvs
 
 echo "Downloading virtualenv-burrito command"
@@ -33,14 +33,6 @@ chmod 755 $VENVBURRITO/bin/virtualenv-burrito
 echo -e "\nRunning: virtualenv-burrito upgrade"
 $VENVBURRITO/bin/virtualenv-burrito upgrade
 echo
-
-# create the virtualenv "binary"
-cat >$VENVBURRITO/bin/virtualenv <<EOF
-#!/bin/bash
-lib=\$(dirname \$0)/../lib
-python \$lib/virtualenv/virtualenv.py \$*
-EOF
-chmod +x $VENVBURRITO/bin/virtualenv
 
 # create the startup script
 cat >$VENVBURRITO/startup.sh <<EOF

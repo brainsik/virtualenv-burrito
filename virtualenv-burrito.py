@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "1.1"
+__version__ = "2.0"
 
 import sys
 import os
@@ -13,6 +13,8 @@ import csv
 import urllib
 import urllib2
 import shutil
+import glob
+import tempfile
 
 try:
     import hashlib  # Python 2.5
@@ -29,19 +31,17 @@ except ImportError:
 
 NAME = os.path.basename(__file__)
 VENVBURRITO = os.path.join(os.environ['HOME'], ".venvburrito")
+VENVBURRITO_LIB = os.path.join(VENVBURRITO, "lib")
 VERSIONS_URL = "https://github.com/brainsik/virtualenv-burrito/raw/experimental/versions.csv"
 
 symlink_search = re.compile('^.+/lib/([^/]+)').search
 
 
 def get_installed_version(name):
-    """Returns current version of `name` based on it's symlink."""
-    symlink = os.path.join(VENVBURRITO, "lib", name)
-    if not os.path.exists(symlink):
-        return
-
-    realname = symlink_search(os.path.realpath(symlink)).group(1)
-    return realname.split('-')[-1]
+    """Returns current version of `name`."""
+    pkg = os.path.join(VENVBURRITO_LIB, "python", name)
+    for egg in glob.glob("%s-*.egg" % pkg):
+        return egg.split('-')[1]
 
 
 def download(url, digest):
@@ -80,7 +80,7 @@ def selfupdate(src):
     os.chmod(dst, 0755)
     print "  Restarting!\n"
     sys.stdout.flush()
-    # pass "noself" so we don't accidentally loop infinitely
+    # pass "no-selfcheck" so we don't accidentally loop infinitely
     os.execl(dst, "virtualenv-burrito", "upgrade", "no-selfcheck")
 
 
@@ -93,21 +93,17 @@ def upgrade_package(filename, name, version):
 
     realname = "%s-%s" % (name, version)
     print "  Installing", realname
+
+    tmp = tempfile.mkdtemp(prefix='venvburrito.')
     try:
-        os.chdir(os.path.join(VENVBURRITO, "lib"))
+        os.chdir(tmp)
         sh("tar xfz %s" % filename)
-        if name == 'virtualenv':
-            sh("ln -snf %s virtualenv" % realname)
-        elif name == 'virtualenvwrapper':
-            sh("ln -snf %s/virtualenvwrapper.sh ." % realname)
-            sh("ln -snf %s/virtualenvwrapper ." % realname)
-        elif name == 'distribute':
-            sh("ln -snf %s distribute" % realname)
-            sh("ln -snf %s/pkg_resources.py ." % realname)
-        else:
-            raise NotImplementedError("No clue what %s is!" % name)
+        os.chdir(os.path.join(tmp, realname))
+        sh("%s setup.py install --home %s --no-compile"
+           % (sys.executable, VENVBURRITO))
     finally:
-        owd and os.chdir(owd)
+        os.chdir(owd or VENVBURRITO)
+        shutil.rmtree(tmp)
 
 
 def check_versions(selfcheck=True):
@@ -141,6 +137,11 @@ def check_versions(selfcheck=True):
 
 def handle_upgrade(selfcheck=True):
     """Handles the upgrade command."""
+    if os.path.exists(VENVBURRITO_LIB):
+        if not os.path.isdir(os.path.join(VENVBURRITO_LIB, "python")):
+            # looks like v1; nuke it
+            shutil.rmtree(VENVBURRITO_LIB)
+
     has_update = check_versions(selfcheck)
     if not has_update:
         print "Everything is up to date."
