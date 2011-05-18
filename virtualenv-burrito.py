@@ -107,6 +107,8 @@ def upgrade_package(filename, name, version):
     finally:
         os.chdir(owd or VENVBURRITO)
         shutil.rmtree(tmp)
+        os.mkdir(VENVBURRITO_LIB)
+        os.mkdir(os.path.join(VENVBURRITO_LIB, "python"))
 
 
 def check_versions(selfcheck=True):
