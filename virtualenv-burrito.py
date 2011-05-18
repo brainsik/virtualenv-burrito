@@ -165,7 +165,7 @@ def handle_upgrade(selfcheck=True):
 
     for update in has_update:
         filename = None
-        name, version, url, digest = update[1:]
+        name, version, url, digest = update
         print "* Upgrading %s …" % name
         try:
             filename = download(url, digest)
