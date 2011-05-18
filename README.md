@@ -50,15 +50,6 @@ apt-get/MacPorts, and more.
 A second feature is the ability to upgrade to newer versions of virtualenv and
 virtualenvwrapper with a single command.
 
-## Limitations
-
-Currently, [extension
-points](http://www.doughellmann.com/docs/virtualenvwrapper/plugins.html#extension-points)
-(e.g., postactivate) are not supported. While this doesn't affect the project
-goal of getting people coding quickly, it's a cool feature, and (more
-importantly) I need it for work. :-) I'll be adding support soon and making it
-available via `virtualenv-burrito upgrade`.
-
 ## Caveat emptor
 
 This simple script is meant for people who do not have virtualenv installed.
