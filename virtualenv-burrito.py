@@ -94,6 +94,7 @@ def upgrade_package(filename, name, version):
     realname = "%s-%s" % (name, version)
     print "  Installing", realname
 
+    os.environ['PYTHONPATH'] = os.path.join(VENVBURRITO_LIB, "python")
     tmp = tempfile.mkdtemp(prefix='venvburrito.')
     try:
         os.chdir(tmp)
@@ -101,6 +102,8 @@ def upgrade_package(filename, name, version):
         os.chdir(os.path.join(tmp, realname))
         sh("%s setup.py install --home %s --no-compile"
            % (sys.executable, VENVBURRITO))
+        if name == 'virtualenvwrapper':
+            shutil.copy("virtualenvwrapper.sh", VENVBURRITO)
     finally:
         os.chdir(owd or VENVBURRITO)
         shutil.rmtree(tmp)

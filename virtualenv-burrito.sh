@@ -16,6 +16,11 @@ case "$kernel" in
     *) echo "Sadly, $kernel hasn't been tested. :'("; exit 1
 esac
 
+if [ -e "$VENVBURRITO" ]; then
+    echo "Looks like virtualenv-burrito is already installed. Bye."
+    exit 1
+fi
+
 if [ -s "$HOME/.bash_profile" ]; then
     if grep -q "$VENVBURRITO_esc/startup.sh" $HOME/.bash_profile; then
         echo "Looks like virtualenv-burrito is already installed. Bye."
@@ -40,13 +45,13 @@ export WORKON_HOME="\$HOME/.virtualenvs"
 export VIRTUALENV_USE_DISTRIBUTE=true
 export PIP_VIRTUALENV_BASE="\$WORKON_HOME"
 export PIP_RESPECT_VIRTUALENV=true
-if ! echo \$PYTHONPATH | grep -q "$VENVBURRITO_esc/lib"; then
-    export PYTHONPATH="$VENVBURRITO_esc/lib:\$PYTHONPATH"
+if ! echo \$PYTHONPATH | grep -q "$VENVBURRITO_esc/lib/python"; then
+    export PYTHONPATH="$VENVBURRITO_esc/lib/python:\$PYTHONPATH"
 fi
 if ! echo \$PATH | grep -q "$VENVBURRITO_esc/bin"; then
     export PATH="$VENVBURRITO_esc/bin:\$PATH"
 fi
-. $VENVBURRITO_esc/lib/virtualenvwrapper.sh
+. $VENVBURRITO_esc/virtualenvwrapper.sh
 if ! [ -e $VENVBURRITO_esc/.firstrun ]; then
     echo
     echo "To create a virtualenv, run:"
