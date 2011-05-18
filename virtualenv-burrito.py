@@ -119,7 +119,7 @@ def check_versions(selfcheck=True):
         raise SystemExit(1)
     reader = csv.reader(fp)
 
-    has_update = {}
+    has_update = []
     for name, version, url, digest in reader:
         if name == '_virtualenv-burrito':
             if not selfcheck:
@@ -131,7 +131,7 @@ def check_versions(selfcheck=True):
 
         if not current or version != current:
             print "+ %s will upgrade (%s -> %s)" % (name, current, version)
-            has_update[name] = (version, url, digest)
+            has_update.append = (name, version, url, digest)
             if name == NAME:
                 break
 
@@ -151,20 +151,21 @@ def handle_upgrade(selfcheck=True):
         raise SystemExit(0)
 
     # update ourself first
-    if NAME in has_update:
-        print "* Upgrading ourself …"
-        filename = None
-        url, digest = has_update[NAME][1:]
-        try:
-            filename = download(url, digest)
-            selfupdate(filename)  # calls os.exec
-        finally:
-            if filename and os.path.exists(filename):
-                os.remove(filename)
+    for update in has_update:
+        if update[0] == NAME:
+            print "* Upgrading ourself …"
+            filename = None
+            url, digest = has_update[2:]
+            try:
+                filename = download(url, digest)
+                selfupdate(filename)  # calls os.exec
+            finally:
+                if filename and os.path.exists(filename):
+                    os.remove(filename)
 
-    for name in has_update:
+    for update in has_update:
         filename = None
-        version, url, digest = has_update[name]
+        name, version, url, digest = update[1:]
         print "* Upgrading %s …" % name
         try:
             filename = download(url, digest)
