@@ -39,27 +39,6 @@ echo -e "\nRunning: virtualenv-burrito upgrade"
 $VENVBURRITO/bin/virtualenv-burrito upgrade
 echo
 
-# create the startup script
-cat >$VENVBURRITO/startup.sh <<EOF
-export WORKON_HOME="\$HOME/.virtualenvs"
-export VIRTUALENV_USE_DISTRIBUTE=true
-export PIP_VIRTUALENV_BASE="\$WORKON_HOME"
-export PIP_RESPECT_VIRTUALENV=true
-if ! echo \$PYTHONPATH | grep -q "$VENVBURRITO_esc/lib/python"; then
-    export PYTHONPATH="$VENVBURRITO_esc/lib/python:\$PYTHONPATH"
-fi
-if ! echo \$PATH | grep -q "$VENVBURRITO_esc/bin"; then
-    export PATH="$VENVBURRITO_esc/bin:\$PATH"
-fi
-. $VENVBURRITO_esc/bin/virtualenvwrapper.sh
-if ! [ -e $VENVBURRITO_esc/.firstrun ]; then
-    echo
-    echo "To create a virtualenv, run:"
-    echo "mkvirtualenv <cool-name>"
-    touch $VENVBURRITO_esc/.firstrun
-fi
-EOF
-
 # startup virtualenv-burrito in the bash_profile
 if [ -s "$HOME/.bash_profile" ]; then
     if ! grep -q "$VENVBURRITO_esc/startup.sh" $HOME/.bash_profile; then

@@ -72,12 +72,48 @@ def download(url, digest):
     raise SystemExit(1)
 
 
+def drop_startup_sh():
+    # create the startup script
+    script = """
+export WORKON_HOME="$HOME/.virtualenvs"
+export VIRTUALENV_USE_DISTRIBUTE=true
+export PIP_VIRTUALENV_BASE="$WORKON_HOME"
+export PIP_RESPECT_VIRTUALENV=true
+
+venvb_py_path="$HOME/.venvburrito/lib/python"
+if [ -z "$PYTHONPATH" ]; then
+    export PYTHONPATH="$venvb_py_path"
+elif ! echo $PYTHONPATH | grep -q "$venvb_py_path"; then
+    export PYTHONPATH="$venvb_py_path:$PYTHONPATH"
+fi
+
+venvb_bin_path="$HOME/.venvburrito/bin"
+if ! echo $PATH | grep -q "$venvb_bin_path"; then
+    export PATH="$venvb_bin_path:$PATH"
+fi
+
+. $HOME/.venvburrito/bin/virtualenvwrapper.sh
+if ! [ -e $HOME/.venvburrito/.firstrun ]; then
+    echo
+    echo "To create a virtualenv, run:"
+    echo "mkvirtualenv <cool-name>"
+    touch $HOME/.venvburrito/.firstrun
+fi
+"""
+    startup_sh = open(os.path.join(VENVBURRITO, "startup.sh"), 'w')
+    startup_sh.write(script)
+    startup_sh.close()
+
+
 def selfupdate(src):
     """Copy src to our destination and exec the new script."""
     dst = os.path.join(VENVBURRITO, "bin", "virtualenv-burrito")
     shutil.copyfile(src, dst)
     os.remove(src)
     os.chmod(dst, 0755)
+
+    drop_startup_sh()
+
     print "  Restarting!\n"
     sys.stdout.flush()
     # pass "no-selfcheck" so we don't accidentally loop infinitely
@@ -169,6 +205,10 @@ def handle_upgrade(selfcheck=True):
             finally:
                 if filename and os.path.exists(filename):
                     os.remove(filename)
+
+    # a first run will need the startup.sh created
+    if not os.path.exists(os.path.join(VENVBURRITO, "startup.sh")):
+        drop_startup_sh()
 
     for update in has_update:
         filename = None
