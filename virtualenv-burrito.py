@@ -105,7 +105,7 @@ def upgrade_package(filename, name, version):
         if name == 'virtualenv':
             # keep virtualenv from using a specific Python interpreter
             print "  Fixing bin/virtualenv"
-            cmd = ("perl -pe 's|^#!.*|#!/usr/bin/env python|' %s"
+            cmd = ("sed -i -e 's|^#!.*|#!/usr/bin/env python|' %s"
                    % os.path.join(VENVBURRITO, "bin", "virtualenv"))
             print cmd
             print sh(cmd)
