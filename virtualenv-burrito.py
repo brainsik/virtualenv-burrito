@@ -100,10 +100,12 @@ def upgrade_package(filename, name, version):
         os.chdir(tmp)
         sh("tar xfz %s" % filename)
         os.chdir(os.path.join(tmp, realname))
-        sh("%s setup.py install --home %s --no-compile"
+        sh("%s setup.py install --home %s --no-compile >/dev/null"
            % (sys.executable, VENVBURRITO))
-        if name == 'virtualenvwrapper':
-            shutil.copy("virtualenvwrapper.sh", VENVBURRITO)
+        if name == 'virtualenv':
+            # keep virtualenv from using a specific Python interpreter
+            sh("perl -i -pe 's|^#!.*|#!/usr/bin/env python|' %s"
+               % os.path.join(VENVBURRITO, "bin", "virtualenv"))
     finally:
         os.chdir(owd or VENVBURRITO)
         shutil.rmtree(tmp)
@@ -142,7 +144,7 @@ def handle_upgrade(selfcheck=True):
     """Handles the upgrade command."""
     if os.path.exists(VENVBURRITO_LIB):
         if not os.path.isdir(os.path.join(VENVBURRITO_LIB, "python")):
-            # looks like v1; nuke it
+            print "  Removing the old and dull and making a shiny new v2!"
             shutil.rmtree(VENVBURRITO_LIB)
             os.mkdir(VENVBURRITO_LIB)
             os.mkdir(os.path.join(VENVBURRITO_LIB, "python"))

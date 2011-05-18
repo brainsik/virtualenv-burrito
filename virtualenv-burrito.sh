@@ -51,7 +51,7 @@ fi
 if ! echo \$PATH | grep -q "$VENVBURRITO_esc/bin"; then
     export PATH="$VENVBURRITO_esc/bin:\$PATH"
 fi
-. $VENVBURRITO_esc/virtualenvwrapper.sh
+. $VENVBURRITO_esc/bin/virtualenvwrapper.sh
 if ! [ -e $VENVBURRITO_esc/.firstrun ]; then
     echo
     echo "To create a virtualenv, run:"
