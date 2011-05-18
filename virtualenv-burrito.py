@@ -131,7 +131,7 @@ def check_versions(selfcheck=True):
 
         if not current or version != current:
             print "+ %s will upgrade (%s -> %s)" % (name, current, version)
-            has_update.append = (name, version, url, digest)
+            has_update.append((name, version, url, digest))
             if name == NAME:
                 break
 
