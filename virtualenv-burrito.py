@@ -144,7 +144,7 @@ def handle_upgrade(selfcheck=True):
     """Handles the upgrade command."""
     if os.path.exists(VENVBURRITO_LIB):
         if not os.path.isdir(os.path.join(VENVBURRITO_LIB, "python")):
-            print "  Removing the old and dull and making a shiny new v2!"
+            print "! Removing old v1 packages and doing fresh v2 install"
             shutil.rmtree(VENVBURRITO_LIB)
             os.mkdir(VENVBURRITO_LIB)
             os.mkdir(os.path.join(VENVBURRITO_LIB, "python"))
