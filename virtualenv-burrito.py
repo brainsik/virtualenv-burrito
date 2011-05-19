@@ -112,12 +112,24 @@ def selfupdate(src):
     os.remove(src)
     os.chmod(dst, 0755)
 
-    drop_startup_sh()
-
     print "  Restarting!\n"
     sys.stdout.flush()
     # pass "no-selfcheck" so we don't accidentally loop infinitely
     os.execl(dst, "virtualenv-burrito", "upgrade", "no-selfcheck")
+
+
+def fix_bin_virtualenv():
+    """Untie the virtualenv script from a specific version of Python"""
+    fi = open('/Users/brainsik/.venvburrito/bin/virtualenv', 'r')
+    fi.readline()
+    '#!/opt/local/Library/Frameworks/Python.framework/Versions/2.6/Resources/Python.app/Contents/MacOS/Python\n'
+    script = fi.read()
+    fi.close()
+
+    fo = open('/Users/brainsik/.venvburrito/bin/virtualenv', 'w')
+    fo.write("#!/usr/bin/env python\n")
+    fo.write(script)
+    fo.close()
 
 
 def upgrade_package(filename, name, version):
@@ -139,12 +151,7 @@ def upgrade_package(filename, name, version):
         sh("%s setup.py install --home %s --no-compile >/dev/null"
            % (sys.executable, VENVBURRITO))
         if name == 'virtualenv':
-            # keep virtualenv from using a specific Python interpreter
-            print "  Fixing bin/virtualenv"
-            cmd = ("sed -i -e 's|^#!.*|#!/usr/bin/env python|' %s"
-                   % os.path.join(VENVBURRITO, "bin", "virtualenv"))
-            print cmd
-            print sh(cmd)
+            fix_bin_virtualenv()
     finally:
         os.chdir(owd or VENVBURRITO)
         shutil.rmtree(tmp)
@@ -206,9 +213,8 @@ def handle_upgrade(selfcheck=True):
                 if filename and os.path.exists(filename):
                     os.remove(filename)
 
-    # a first run will need the startup.sh created
-    if not os.path.exists(os.path.join(VENVBURRITO, "startup.sh")):
-        drop_startup_sh()
+    # ensure we are on the latest version of the startup script
+    drop_startup_sh()
 
     for update in has_update:
         filename = None
