@@ -123,11 +123,12 @@ def fix_bin_virtualenv():
     """Untie the virtualenv script from a specific version of Python"""
     fi = open('/Users/brainsik/.venvburrito/bin/virtualenv', 'r')
     fi.readline()  # skip the hash bang
-    fi.close()
 
     fo = open('/Users/brainsik/.venvburrito/bin/virtualenv', 'w')
     fo.write("#!/usr/bin/env python\n")
     fo.write(fi.read())
+
+    fi.close()
     fo.close()
 
 
