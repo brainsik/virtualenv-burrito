@@ -15,7 +15,6 @@ import urllib2
 import shutil
 import glob
 import tempfile
-from time import sleep
 
 try:
     import hashlib  # Python 2.5
@@ -150,8 +149,7 @@ def upgrade_package(filename, name, version):
         os.chdir(os.path.join(tmp, realname))
         sh("%s setup.py install --home %s --no-compile >/dev/null"
            % (sys.executable, VENVBURRITO))
-        if name == 'virtualenv':
-            sleep(5)  # wtf is going on here
+        if name in ['virtualenv', 'virtualenvwrapper']:
             fix_bin_virtualenv()
     finally:
         os.chdir(owd or VENVBURRITO)
