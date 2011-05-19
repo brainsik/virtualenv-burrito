@@ -15,6 +15,7 @@ import urllib2
 import shutil
 import glob
 import tempfile
+from time import sleep
 
 try:
     import hashlib  # Python 2.5
@@ -121,14 +122,12 @@ def selfupdate(src):
 def fix_bin_virtualenv():
     """Untie the virtualenv script from a specific version of Python"""
     fi = open('/Users/brainsik/.venvburrito/bin/virtualenv', 'r')
-    fi.readline()
-    '#!/opt/local/Library/Frameworks/Python.framework/Versions/2.6/Resources/Python.app/Contents/MacOS/Python\n'
-    script = fi.read()
+    fi.readline()  # skip the hash bang
     fi.close()
 
     fo = open('/Users/brainsik/.venvburrito/bin/virtualenv', 'w')
     fo.write("#!/usr/bin/env python\n")
-    fo.write(script)
+    fo.write(fi.read())
     fo.close()
 
 
@@ -151,6 +150,7 @@ def upgrade_package(filename, name, version):
         sh("%s setup.py install --home %s --no-compile >/dev/null"
            % (sys.executable, VENVBURRITO))
         if name == 'virtualenv':
+            sleep(5)  # wtf is going on here
             fix_bin_virtualenv()
     finally:
         os.chdir(owd or VENVBURRITO)
