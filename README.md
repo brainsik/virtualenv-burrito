@@ -21,9 +21,9 @@ To create a new virtualenv:
 
     mkvirtualenv newname
 
-Once activated, pip install (_without_ using sudo) whichever Python packages
-you want. They'll only be available in that virtualenv. You can make as many
-virtualenvs as you want.
+Once activated, `pip install <package>` (_without_ using sudo) whichever Python
+packages you want. They'll only be available in that virtualenv. You can make
+as many virtualenvs as you want.
 
 To switch between virtualenvs:
 
@@ -50,10 +50,6 @@ apt-get/MacPorts, and more.
 A second feature is the ability to upgrade to newer versions of virtualenv and
 virtualenvwrapper with a single command.
 
-## Caveat emptor
-
-This simple script is meant for people who do not have virtualenv installed.
-
 ## Credits
 
 The real hard work is done by the creators of
@@ -61,3 +57,7 @@ The real hard work is done by the creators of
 [Virtualenvwrapper](http://www.doughellmann.com/projects/virtualenvwrapper/).
 Virtualenv is maintained by [Ian Bicking](ianbicking.org/). Virtualenvwrapper
 is maintained by [Doug Hellman](http://www.doughellmann.com/).
+
+## Caveat emptor
+
+This simple script is meant for people who do not have virtualenv installed.
