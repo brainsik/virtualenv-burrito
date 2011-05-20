@@ -8,7 +8,7 @@ set -e
 
 VENVBURRITO="$HOME/.venvburrito"
 VENVBURRITO_esc="\$HOME/.venvburrito"
-MASTER_URL="https://github.com/brainsik/virtualenv-burrito/raw/master"
+MASTER_URL="https://github.com/brainsik/virtualenv-burrito/raw/experimental"
 
 kernel=$(uname -s)
 case "$kernel" in
