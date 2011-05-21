@@ -114,8 +114,7 @@ def selfupdate(src):
 
     print "  Restarting!\n"
     sys.stdout.flush()
-    # pass "no-selfcheck" so we don't accidentally loop infinitely
-    os.execl(dst, "virtualenv-burrito", "upgrade", "no-selfcheck")
+    os.execl(dst, "virtualenv-burrito", "upgrade", "selfupdated")
 
 
 def fix_bin_virtualenv():
@@ -185,7 +184,7 @@ def check_versions(selfcheck=True):
     return has_update
 
 
-def handle_upgrade(selfcheck=True):
+def handle_upgrade(selfupdated=False):
     """Handles the upgrade command."""
     if os.path.exists(VENVBURRITO_LIB):
         if not os.path.isdir(os.path.join(VENVBURRITO_LIB, "python")):
@@ -194,10 +193,7 @@ def handle_upgrade(selfcheck=True):
             os.mkdir(VENVBURRITO_LIB)
             os.mkdir(os.path.join(VENVBURRITO_LIB, "python"))
 
-    has_update = check_versions(selfcheck)
-    if not has_update:
-        print "Everything is up to date."
-        raise SystemExit(0)
+    has_update = check_versions(selfupdated == False)
 
     # update ourself first
     for update in has_update:
@@ -212,9 +208,7 @@ def handle_upgrade(selfcheck=True):
                 if filename and os.path.exists(filename):
                     os.remove(filename)
 
-    # ensure we are on the latest version of the startup script
-    drop_startup_sh()
-
+    # update other packages
     for update in has_update:
         filename = None
         name, version, url, digest = update
@@ -225,6 +219,16 @@ def handle_upgrade(selfcheck=True):
         finally:
             if filename and os.path.exists(filename):
                 os.remove(filename)
+
+    # ensure we are on the latest version of the startup script
+    if selfupdated:
+        drop_startup_sh()
+        print "To finish the upgrade, run this:"
+        print "source %s/startup.sh" % VENVBURRITO
+
+    elif not has_update:
+        print "Everything is up to date."
+        return
 
     print "\nFin."
 
@@ -242,8 +246,8 @@ def main(argv):
         usage(returncode=0)
 
     if argv[1] in ['upgrade', 'update']:
-        if len(argv) > 2 and argv[2] == 'no-selfcheck':
-            handle_upgrade(selfcheck=False)
+        if len(argv) > 2 and argv[2] == 'selfupdated':
+            handle_upgrade(selfupdated=True)
         else:
             handle_upgrade()
     else:
