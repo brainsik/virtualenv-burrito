@@ -237,7 +237,7 @@ def main(argv):
         usage(returncode=0)
 
     if argv[1] in ['upgrade', 'update']:
-        if len(argv) > 2 and argv[2] == 'selfupdated':
+        if len(argv) > 2 and argv[2] in ['selfupdated', 'no-selfcheck']:
             handle_upgrade(selfupdated=True)
         else:
             handle_upgrade()
