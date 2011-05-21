@@ -195,27 +195,18 @@ def handle_upgrade(selfupdated=False):
 
     has_update = check_versions(selfupdated == False)
 
-    # update ourself first
-    for update in has_update:
-        if update[0] == NAME:
-            print "* Upgrading ourself …"
-            filename = None
-            url, digest = has_update[2:]
-            try:
-                filename = download(url, digest)
-                selfupdate(filename)  # calls os.exec
-            finally:
-                if filename and os.path.exists(filename):
-                    os.remove(filename)
-
     # update other packages
     for update in has_update:
-        filename = None
         name, version, url, digest = update
-        print "* Upgrading %s …" % name
+
+        filename = download(url, digest)
         try:
-            filename = download(url, digest)
-            upgrade_package(filename, name, version)
+            if name == NAME:
+                print "* Upgrading ourself …"
+                selfupdate(filename)  # calls os.exec
+            else:
+                print "* Upgrading %s …" % name
+                upgrade_package(filename, name, version)
         finally:
             if filename and os.path.exists(filename):
                 os.remove(filename)
