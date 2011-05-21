@@ -184,7 +184,7 @@ def check_versions(selfcheck=True):
     return has_update
 
 
-def handle_upgrade(selfupdated=False):
+def handle_upgrade(selfupdated=False, firstrun=False):
     """Handles the upgrade command."""
     if os.path.exists(VENVBURRITO_LIB):
         if not os.path.isdir(os.path.join(VENVBURRITO_LIB, "python")):
@@ -212,7 +212,9 @@ def handle_upgrade(selfupdated=False):
                 os.remove(filename)
 
     # startup.sh needs to be created after selfupdate AND on install
-    drop_startup_sh()
+    if selfupdated or firstrun:
+        drop_startup_sh()
+
     if selfupdated:
         print "\nTo finish the upgrade, run this:"
         print "source %s/startup.sh" % VENVBURRITO
@@ -238,8 +240,11 @@ def main(argv):
         usage(returncode=0)
 
     if argv[1] in ['upgrade', 'update']:
-        if len(argv) > 2 and argv[2] in ['selfupdated', 'no-selfcheck']:
-            handle_upgrade(selfupdated=True)
+        if len(argv) > 2:
+            if argv[2] in ['selfupdated', 'no-selfcheck']:
+                handle_upgrade(selfupdated=True)
+            if argv[2] == 'firstrun':
+                handle_upgrade(firstrun=True)
         else:
             handle_upgrade()
     else:
