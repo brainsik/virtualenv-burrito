@@ -211,9 +211,9 @@ def handle_upgrade(selfupdated=False):
             if filename and os.path.exists(filename):
                 os.remove(filename)
 
-    # ensure we are on the latest version of the startup script
+    # startup.sh needs to be created after selfupdate AND on install
+    drop_startup_sh()
     if selfupdated:
-        drop_startup_sh()
         print "\nTo finish the upgrade, run this:"
         print "source %s/startup.sh" % VENVBURRITO
 
