@@ -214,14 +214,15 @@ def handle_upgrade(selfupdated=False):
     # ensure we are on the latest version of the startup script
     if selfupdated:
         drop_startup_sh()
-        print "To finish the upgrade, run this:"
+        print "\nTo finish the upgrade, run this:"
         print "source %s/startup.sh" % VENVBURRITO
 
     elif not has_update:
         print "Everything is up to date."
         return
 
-    print "\nFin."
+    else:
+        print "\nFin."
 
 
 def usage(returncode=1):
