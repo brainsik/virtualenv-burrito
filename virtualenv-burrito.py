@@ -114,8 +114,7 @@ def selfupdate(src):
 
     print "  Restarting!\n"
     sys.stdout.flush()
-    # pass "no-selfcheck" so we don't accidentally loop infinitely
-    os.execl(dst, "virtualenv-burrito", "upgrade", "no-selfcheck")
+    os.execl(dst, "virtualenv-burrito", "upgrade", "selfupdated")
 
 
 def fix_bin_virtualenv():
@@ -185,7 +184,7 @@ def check_versions(selfcheck=True):
     return has_update
 
 
-def handle_upgrade(selfcheck=True):
+def handle_upgrade(selfupdated=False, firstrun=False):
     """Handles the upgrade command."""
     if os.path.exists(VENVBURRITO_LIB):
         if not os.path.isdir(os.path.join(VENVBURRITO_LIB, "python")):
@@ -194,39 +193,38 @@ def handle_upgrade(selfcheck=True):
             os.mkdir(VENVBURRITO_LIB)
             os.mkdir(os.path.join(VENVBURRITO_LIB, "python"))
 
-    has_update = check_versions(selfcheck)
-    if not has_update:
-        print "Everything is up to date."
-        raise SystemExit(0)
+    has_update = check_versions(selfupdated == False)
 
-    # update ourself first
+    # update other packages
     for update in has_update:
-        if update[0] == NAME:
-            print "* Upgrading ourself …"
-            filename = None
-            url, digest = has_update[2:]
-            try:
-                filename = download(url, digest)
-                selfupdate(filename)  # calls os.exec
-            finally:
-                if filename and os.path.exists(filename):
-                    os.remove(filename)
-
-    # ensure we are on the latest version of the startup script
-    drop_startup_sh()
-
-    for update in has_update:
-        filename = None
         name, version, url, digest = update
-        print "* Upgrading %s …" % name
+
+        filename = download(url, digest)
         try:
-            filename = download(url, digest)
-            upgrade_package(filename, name, version)
+            if name == NAME:
+                print "* Upgrading ourself …"
+                selfupdate(filename)  # calls os.exec
+            else:
+                print "* Upgrading %s …" % name
+                upgrade_package(filename, name, version)
         finally:
             if filename and os.path.exists(filename):
                 os.remove(filename)
 
-    print "\nFin."
+    # startup.sh needs to be created after selfupdate AND on install
+    if selfupdated or firstrun:
+        drop_startup_sh()
+
+    if selfupdated:
+        print "\nTo finish the upgrade, run this:"
+        print "source %s/startup.sh" % VENVBURRITO
+
+    elif not has_update:
+        print "Everything is up to date."
+        return
+
+    else:
+        print "\nFin."
 
 
 def usage(returncode=1):
@@ -242,8 +240,13 @@ def main(argv):
         usage(returncode=0)
 
     if argv[1] in ['upgrade', 'update']:
-        if len(argv) > 2 and argv[2] == 'no-selfcheck':
-            handle_upgrade(selfcheck=False)
+        if len(argv) > 2:
+            if argv[2] in ['selfupdated', 'no-selfcheck']:
+                handle_upgrade(selfupdated=True)
+            elif argv[2] == 'firstrun':
+                handle_upgrade(firstrun=True)
+            else:
+                usage()
         else:
             handle_upgrade()
     else:
