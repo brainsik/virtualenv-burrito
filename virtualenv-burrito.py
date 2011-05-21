@@ -243,8 +243,10 @@ def main(argv):
         if len(argv) > 2:
             if argv[2] in ['selfupdated', 'no-selfcheck']:
                 handle_upgrade(selfupdated=True)
-            if argv[2] == 'firstrun':
+            elif argv[2] == 'firstrun':
                 handle_upgrade(firstrun=True)
+            else:
+                usage()
         else:
             handle_upgrade()
     else:
