@@ -149,9 +149,10 @@ def upgrade_package(filename, name, version):
         sh("tar xfz %s" % filename)
         os.chdir(os.path.join(tmp, realname))
         if name == 'distribute':
+            # build and install the egg to avoid patching the system
             sh("%s setup.py bdist_egg" % sys.executable)
             egg = glob.glob(os.path.join(os.getcwd(), "dist", "*egg"))[0]
-            sh("%s setup.py easy_install --exclude-scripts --install-dir %s %s"
+            sh("%s setup.py easy_install --exclude-scripts --install-dir %s %s >/dev/null"
                % (sys.executable, os.path.join(VENVBURRITO_LIB, "python"), egg))
         else:
             sh("%s setup.py install --home %s --no-compile >/dev/null"
