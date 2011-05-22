@@ -148,8 +148,14 @@ def upgrade_package(filename, name, version):
         os.chdir(tmp)
         sh("tar xfz %s" % filename)
         os.chdir(os.path.join(tmp, realname))
-        sh("%s setup.py install --home %s --no-compile >/dev/null"
-           % (sys.executable, VENVBURRITO))
+        if name == 'distribute':
+            sh("%s setup.py bdist_egg" % sys.executable)
+            egg = glob.glob(os.path.join(os.getcwd(), "dist", "*egg"))[0]
+            sh("%s setup.py easy_install --exclude-scripts --install-dir %s"
+               % (sys.executable, os.path.join(VENVBURRITO_LIB, "python")))
+        else:
+            sh("%s setup.py install --home %s --no-compile >/dev/null"
+               % (sys.executable, VENVBURRITO))
         if name in ['virtualenv', 'virtualenvwrapper']:
             fix_bin_virtualenv()
     finally:
