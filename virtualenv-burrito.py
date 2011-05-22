@@ -151,8 +151,8 @@ def upgrade_package(filename, name, version):
         if name == 'distribute':
             sh("%s setup.py bdist_egg" % sys.executable)
             egg = glob.glob(os.path.join(os.getcwd(), "dist", "*egg"))[0]
-            sh("%s setup.py easy_install --exclude-scripts --install-dir %s"
-               % (sys.executable, os.path.join(VENVBURRITO_LIB, "python")))
+            sh("%s setup.py easy_install --exclude-scripts --install-dir %s %s"
+               % (sys.executable, os.path.join(VENVBURRITO_LIB, "python"), egg))
         else:
             sh("%s setup.py install --home %s --no-compile >/dev/null"
                % (sys.executable, VENVBURRITO))
