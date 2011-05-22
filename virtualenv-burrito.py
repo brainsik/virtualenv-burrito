@@ -143,7 +143,7 @@ def upgrade_package(filename, name, version):
     print "  Installing", realname
 
     os.environ['PYTHONPATH'] = os.path.join(VENVBURRITO_LIB, "python")
-    tmp = tempfile.mkdtemp(prefix='venvburrito.')
+    tmp = tempfile.mkdtemp(prefix=realname + ".", dir=VENVBURRITO)
     try:
         os.chdir(tmp)
         sh("tar xfz %s" % filename)
