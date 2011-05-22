@@ -76,7 +76,6 @@ def drop_startup_sh():
     # create the startup script
     script = """
 export WORKON_HOME="$HOME/.virtualenvs"
-export VIRTUALENV_USE_DISTRIBUTE=true
 export PIP_VIRTUALENV_BASE="$WORKON_HOME"
 export PIP_RESPECT_VIRTUALENV=true
 
