@@ -41,12 +41,20 @@ $VENVBURRITO/bin/$cmd
 echo
 
 # startup virtualenv-burrito in the bash_profile
-if [ -s "$HOME/.bash_profile" ]; then
-    if ! grep -q "$VENVBURRITO_esc/startup.sh" $HOME/.bash_profile; then
-        echo -e "\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh" >> ~/.bash_profile
+start_code="\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh"
+check_code="$VENVBURRITO_esc/startup.sh"
+if [ -s ~/.bash_profile ]; then
+    if ! grep -q "$check_code" ~/.bash_profile; then
+        echo -e "$start_code" >> ~/.bash_profile
     fi
 else
-    echo -e "# run .bashrc\n. ~/.bashrc\n\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh" > ~/.bash_profile
+    if [ -s ~/.profile ]; then
+        if ! grep -q "$check_code" ~/.profile; then
+            echo -e "$start_code" >> ~/.profile
+        fi
+    else
+        echo -e "# run .bashrc\n. ~/.bashrc\n$start_code" > ~/.bash_profile
+    fi
 fi
 
 echo
