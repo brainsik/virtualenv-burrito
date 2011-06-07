@@ -6,7 +6,7 @@ environment.
 
 ## Install
 
-    curl -s https://github.com/brainsik/virtualenv-burrito/raw/master/virtualenv-burrito.sh | bash
+    curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | bash
 
 ## Use
 
