@@ -1,10 +1,10 @@
-# Virtualenv Burrito [![status](http://stillmaintained.com/brainsik/virtualenv-burrito.png)](http://stillmaintained.com/brainsik/virtualenv-burrito)
+# Virtualenv Burrito [![status](http://stillmaintained.com/brainsik/virtualenv-burrito.png)](http://stillmaintained.com/brainsik/virtualenv-burrito) #
 
 With one command, have a working [virtualenv](http://pypi.python.org/pypi/virtualenv) +
 [virtualenvwrapper](http://pypi.python.org/pypi/virtualenvwrapper)
 environment.
 
-## Install
+## Install ##
 
     curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | bash
 
@@ -15,7 +15,7 @@ See the
 or read the
 [virtualenvwrapper command reference](http://www.doughellmann.com/docs/virtualenvwrapper/command_ref.html).
 
-### Quickstart
+### Quickstart ###
 
 To create a new virtualenv:
 
@@ -29,13 +29,13 @@ To switch between virtualenvs:
 
     workon othername
 
-## Upgrade
+## Upgrade ##
 
 To upgrade to the latest virtualenv + virtualenvwrapper packages:
 
     virtualenv-burrito upgrade
 
-## Why
+## Why ##
 
 To get Python coders coding.
 
@@ -50,7 +50,15 @@ apt-get/MacPorts, and more.
 A second feature is the ability to upgrade to newer versions of virtualenv and
 virtualenvwrapper with a single command.
 
-## Credits
+## Multiple Pythons ##
+
+With Virtualenv Burrito, it's possible to create virtualenvs using different
+Python interpreters. For example, you can use `mkvirtualenv` to create a Python
+2.7 virtualenv and then use it to make a Python 2.5 virtualenv. It's considered
+experimental, but I have yet to hit any problems. To try it out, see the
+article [Virtualenvs with different interpreters](http://bsik.net/p8685119046).
+
+## Credits ##
 
 The real hard work is done by the creators of
 [Virtualenv](http://www.virtualenv.org/) and
@@ -58,6 +66,6 @@ The real hard work is done by the creators of
 Virtualenv is maintained by [Ian Bicking](ianbicking.org/). Virtualenvwrapper
 is maintained by [Doug Hellman](http://www.doughellmann.com/).
 
-## Caveat emptor
+## Caveat emptor ##
 
 This simple script is meant for people who do not have virtualenv installed.
