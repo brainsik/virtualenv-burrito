@@ -43,7 +43,8 @@ def get_installed_version(name):
     versions = []
     for egg in glob.glob("%s-*.egg" % pkg):
         versions.append(map(int, egg.split('-')[1].split('.')))
-    return ".".join(map(str, max(versions)))
+    if versions:
+        return ".".join(map(str, max(versions)))
 
 
 def download(url, digest):
