@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.0.2"
+__version__ = "2.0.3"
 
 import sys
 import os
@@ -40,8 +40,10 @@ symlink_search = re.compile('^.+/lib/([^/]+)').search
 def get_installed_version(name):
     """Returns current version of `name`."""
     pkg = os.path.join(VENVBURRITO_LIB, "python", name)
+    versions = []
     for egg in glob.glob("%s-*.egg" % pkg):
-        return egg.split('-')[1]
+        versions.append(map(int, egg.split('-')[1].split('.')))
+    return ".".join(map(str, max(versions)))
 
 
 def download(url, digest):
