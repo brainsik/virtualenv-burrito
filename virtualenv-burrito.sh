@@ -18,6 +18,7 @@ esac
 
 if [ -e "$VENVBURRITO" ]; then
     echo "Found existing $VENVBURRITO"
+    echo
     echo "Looks like virtualenv-burrito is already installed. Bye."
     exit 1
 fi
@@ -39,11 +40,18 @@ start_code="\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh"
 check_code="$VENVBURRITO_esc/startup.sh"
 if [ -s ~/.bash_profile ]; then
     if ! grep -q "$check_code" ~/.bash_profile; then
-        echo -e "$start_code" >> ~/.bash_profile
+        cat >> ~/.bash_profile <<EOF
+
+# startup virtualenv-burrito
+if [ -f $VENVBURRITO_esc/startup.sh ]; then
+    . $VENVBURRITO_esc/startup.sh
+fi
+EOF
     fi
 else
     if [ -s ~/.profile ]; then
         if ! grep -q "$check_code" ~/.profile; then
+            # match the .profile style and wrap paths in double quotes
             cat >> ~/.profile <<EOF
 
 # if running bash
@@ -56,7 +64,17 @@ fi
 EOF
         fi
     else
-        echo -e "# run .bashrc\n. ~/.bashrc\n$start_code" > ~/.bash_profile
+        cat > ~/.bash_profile <<EOF
+# include .bashrc if it exists
+if [ -f \$HOME/.bashrc ]; then
+    . \$HOME/.bashrc
+fi
+
+# startup virtualenv-burrito
+if [ -f $VENVBURRITO_esc/startup.sh ]; then
+    . $VENVBURRITO_esc/startup.sh
+fi
+EOF
     fi
 fi
 
