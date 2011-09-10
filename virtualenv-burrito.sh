@@ -17,19 +17,13 @@ case "$kernel" in
 esac
 
 if [ -e "$VENVBURRITO" ]; then
+    echo "Found existing $VENVBURRITO"
     echo "Looks like virtualenv-burrito is already installed. Bye."
     exit 1
 fi
 
-if [ -s "$HOME/.bash_profile" ]; then
-    if grep -q "$VENVBURRITO_esc/startup.sh" $HOME/.bash_profile; then
-        echo "Looks like virtualenv-burrito is already installed. Bye."
-        exit 1
-    fi
-fi
 
-
-test -d $VENVBURRITO || mkdir -p $VENVBURRITO/{bin,lib/python}
+mkdir -p $VENVBURRITO/{bin,lib/python}
 test -d $HOME/.virtualenvs || mkdir $HOME/.virtualenvs
 
 echo "Downloading virtualenv-burrito command"
