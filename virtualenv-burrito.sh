@@ -44,7 +44,16 @@ if [ -s ~/.bash_profile ]; then
 else
     if [ -s ~/.profile ]; then
         if ! grep -q "$check_code" ~/.profile; then
-            echo -e "$start_code" >> ~/.profile
+            cat >> ~/.profile <<EOF
+
+# if running bash
+if [ -n "\$BASH_VERSION" ]; then
+    # startup virtualenv-burrito
+    if [ -f "$VENVBURRITO_esc/startup.sh" ]; then
+        . "$VENVBURRITO_esc/startup.sh"
+    fi
+fi
+EOF
         fi
     else
         echo -e "# run .bashrc\n. ~/.bashrc\n$start_code" > ~/.bash_profile
