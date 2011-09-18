@@ -8,7 +8,6 @@ __version__ = "2.0.4"
 
 import sys
 import os
-import re
 import csv
 import urllib
 import urllib2
@@ -17,24 +16,22 @@ import glob
 import tempfile
 
 try:
-    import hashlib  # Python 2.5
+    import hashlib
     sha1 = hashlib.sha1
-except ImportError:
+except ImportError:  # Python < 2.5
     import sha
     sha1 = sha.new
 
 try:
-    import subprocess  # Python 2.4
+    import subprocess
     sh = lambda cmd: subprocess.call(cmd, shell=True)
-except ImportError:
+except ImportError:  # Python < 2.4
     sh = os.system
 
 NAME = os.path.basename(__file__)
 VENVBURRITO = os.path.join(os.environ['HOME'], ".venvburrito")
 VENVBURRITO_LIB = os.path.join(VENVBURRITO, "lib")
 VERSIONS_URL = "https://raw.github.com/brainsik/virtualenv-burrito/master/versions.csv"
-
-symlink_search = re.compile('^.+/lib/([^/]+)').search
 
 
 def get_installed_version(name):
@@ -135,7 +132,7 @@ def fix_bin_virtualenv():
 
 
 def upgrade_package(filename, name, version):
-    """Unpacks and symlinks."""
+    """Install Python package in tarball `filename`."""
     try:
         owd = os.getcwd()
     except OSError:
@@ -167,7 +164,7 @@ def upgrade_package(filename, name, version):
 
 
 def check_versions(selfcheck=True):
-    """Return dict of packages which can be upgraded."""
+    """Return packages which can be upgraded."""
     try:
         fp = urllib2.urlopen(VERSIONS_URL)
     except Exception, e:
