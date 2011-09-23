@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.0.4"
+__version__ = "2.0.5"
 
 import sys
 import os
@@ -66,9 +66,13 @@ def download(url, digest):
     if filehash.hexdigest() == digest:
         return filename
 
-    print "\nThe file %s didn't look like we expeceted. It may have been moved"
-    print " or tampered with. You should let me know — @brainsik."
-    os.remove(filename)
+    print ("\nThe file %s didn't look like we expected.\n"
+           "It may have been moved or tampered with. You should tell me:"
+           " @brainsik." % name)
+    try:
+        os.remove(filename)
+    except OSError:
+        pass
     raise SystemExit(1)
 
 
