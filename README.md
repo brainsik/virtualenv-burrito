@@ -55,8 +55,12 @@ virtualenvwrapper with a single command.
 With Virtualenv Burrito, it's possible to create virtualenvs using different
 Python interpreters. For example, you can use `mkvirtualenv` to create a Python
 2.7 virtualenv and then use it to make a Python 2.5 virtualenv. It's considered
-experimental, but I have yet to hit any problems. To try it out, see the
-article [Virtualenvs with different interpreters](http://bsik.net/p8685119046).
+experimental, but I have yet to hit any problems.
+
+To try it out, see the article
+[Virtualenvs with different interpreters](http://bsik.net/p8685119046).
+You can also view my example of
+[creating a virtualenv using PyPy](https://github.com/brainsik/virtualenv-burrito/issues/13#issuecomment-2200184).
 
 ## Credits ##
 
