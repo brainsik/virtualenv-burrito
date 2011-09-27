@@ -55,7 +55,7 @@ virtualenvwrapper with a single command.
 Both `virtualenv` and `virtualenvwrapper` let you specify which Python interpreter
 the virtualenv should use via the `-p` switch. For example:
 
-    $ mkvirtualenv -p /path/to/some/python coolname
+    mkvirtualenv -p /path/to/some/python coolname
 
 This creates a virtualenv called “coolname” which uses `/path/to/some/python`
 as its interpreter. I've tested this with PyPy and it worked great.
