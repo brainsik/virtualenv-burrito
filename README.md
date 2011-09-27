@@ -52,15 +52,13 @@ virtualenvwrapper with a single command.
 
 ## Multiple Pythons ##
 
-With Virtualenv Burrito, it's possible to create virtualenvs using different
-Python interpreters. For example, you can use `mkvirtualenv` to create a Python
-2.7 virtualenv and then use it to make a Python 2.5 virtualenv. It's considered
-experimental, but I have yet to hit any problems.
+Both `virtualenv` and `virtualenvwrapper` let you specify which Python interpreter
+the virtualenv should use via the `-p` switch. For example:
 
-To try it out, see the article
-[Virtualenvs with different interpreters](http://bsik.net/p8685119046).
-You can also view my example of
-[creating a virtualenv using PyPy](https://github.com/brainsik/virtualenv-burrito/issues/13#issuecomment-2200184).
+    $ mkvirtualenv -p /path/to/some/python coolname
+
+This creates a virtualenv called “coolname” which uses `/path/to/some/python`
+as its interpreter. I've tested this with PyPy and it worked great.
 
 ## Credits ##
 
