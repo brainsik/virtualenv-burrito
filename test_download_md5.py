@@ -9,7 +9,7 @@ PYPI_MD5_URL = 'http://pypi.python.org/pypi?:action=show_md5&digest='
 
 PYPI_DOWNLOADS = {
     # filename: md5sum
-    'distribute-0.6.21.tar.gz': 'f783444754861f9b33e9f4083bd97b60',
+    'distribute-0.6.24.tar.gz': '17722b22141aba8235787f79800cc452',
     'virtualenv-1.6.4.tar.gz': '1072b66d53c24e019a8f1304ac9d9fc5',
     'virtualenvwrapper-2.8.tar.gz': '4998181c67fad05a6429e1ca84d638b1',
 }
