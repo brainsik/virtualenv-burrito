@@ -23,6 +23,11 @@ if [ -e "$VENVBURRITO" ]; then
     exit 1
 fi
 
+backup_profile() {
+    profile="$1"
+    cp -p $HOME/$profile $HOME/${profile}.pre-virtualenv-burrito
+}
+
 
 mkdir -p $VENVBURRITO/{bin,lib/python}
 test -d $HOME/.virtualenvs || mkdir $HOME/.virtualenvs
@@ -35,12 +40,14 @@ echo -e "\nRunning: $cmd"
 $VENVBURRITO/bin/$cmd
 echo
 
-# startup virtualenv-burrito in the bash_profile
+# startup virtualenv-burrito in the (bash_)profile
 start_code="\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh"
 check_code="$VENVBURRITO_esc/startup.sh"
 if [ -s ~/.bash_profile ]; then
     if ! grep -q "$check_code" ~/.bash_profile; then
-        cat >> ~/.bash_profile <<EOF
+        profile=".bash_profile"
+        backup_profile $profile
+        cat >> ~/$profile <<EOF
 
 # startup virtualenv-burrito
 if [ -f $VENVBURRITO_esc/startup.sh ]; then
@@ -51,8 +58,10 @@ EOF
 else
     if [ -s ~/.profile ]; then
         if ! grep -q "$check_code" ~/.profile; then
+            profile=".profile"
+            backup_profile $profile
             # match the .profile style and wrap paths in double quotes
-            cat >> ~/.profile <<EOF
+            cat >> ~/$profile <<EOF
 
 # if running bash
 if [ -n "\$BASH_VERSION" ]; then
@@ -64,7 +73,8 @@ fi
 EOF
         fi
     else
-        cat > ~/.bash_profile <<EOF
+        profile=".bash_profile"
+        cat > ~/$profile <<EOF
 # include .bashrc if it exists
 if [ -f \$HOME/.bashrc ]; then
     . \$HOME/.bashrc
@@ -78,10 +88,14 @@ EOF
     fi
 fi
 
+if [ -s $HOME/${profile}.pre-virtualenv-burrito ]; then
+    backup=" The original\nwas saved to ~/$profile.pre-virtualenv-burrito."
+fi
 echo
 echo "Done with setup!"
 echo
-echo "The virtualenvwrapper environment will be available when you login."
+echo "Code was added to $HOME/$profile so the virtualenvwrapper"
+echo -e "environment will be available when you login.$backup"
 echo
-echo "To start it now, run this:"
+echo "To start now, run this:"
 echo "source $VENVBURRITO/startup.sh"
