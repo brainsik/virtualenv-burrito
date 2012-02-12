@@ -71,10 +71,10 @@ is maintained by [Doug Hellman](http://www.doughellmann.com/).
 
 ## Advanced ##
 
-If you have a sophisticated shell environment or customized install scripts you
-may want to prevent the install script (virtualenv-burrito.sh) from modifying
-your dot profile. To do this, either use the `--exclude-profile` option or
-set the environment variable `exclude_profile` to a non-empty value:
+If you have a sophisticated shell environment or customized install scripts,
+you may want to prevent the install script (virtualenv-burrito.sh) from
+modifying your dot profile. To do this, either use the `--exclude-profile`
+option or set the environment variable `exclude_profile` to a non-empty value:
 
     curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | exclude_profile=1 bash
 
