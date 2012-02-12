@@ -66,8 +66,8 @@ worked great.
 The real hard work is done by the creators of
 [Virtualenv](http://www.virtualenv.org/) and
 [Virtualenvwrapper](http://www.doughellmann.com/projects/virtualenvwrapper/).
-Virtualenv is maintained by [Ian Bicking](ianbicking.org/). Virtualenvwrapper
-is maintained by [Doug Hellman](http://www.doughellmann.com/).
+Virtualenv is maintained by [Ian Bicking](http://ianbicking.org/).
+Virtualenvwrapper is maintained by [Doug Hellman](http://www.doughellmann.com/).
 
 ## Advanced ##
 
