@@ -23,7 +23,7 @@ case "$kernel" in
     *) echo "Sadly, $kernel hasn't been tested. :'("; exit 1
 esac
 
-unset exclude_profile
+# provide a friendly way to set this environment variable
 test "$1" == "--exclude-profile" && exclude_profile="yep"
 
 
