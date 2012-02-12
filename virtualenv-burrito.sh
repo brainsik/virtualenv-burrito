@@ -10,12 +10,6 @@ VENVBURRITO="$HOME/.venvburrito"
 VENVBURRITO_esc="\$HOME/.venvburrito"
 MASTER_URL="https://raw.github.com/brainsik/virtualenv-burrito/master"
 
-kernel=$(uname -s)
-case "$kernel" in
-    Darwin|Linux) ;;
-    *) echo "Sadly, $kernel hasn't been tested. :'("; exit 1
-esac
-
 if [ -e "$VENVBURRITO" ]; then
     echo "Found existing $VENVBURRITO"
     echo
@@ -23,9 +17,77 @@ if [ -e "$VENVBURRITO" ]; then
     exit 1
 fi
 
+kernel=$(uname -s)
+case "$kernel" in
+    Darwin|Linux) ;;
+    *) echo "Sadly, $kernel hasn't been tested. :'("; exit 1
+esac
+
+unset exclude_profile
+test "$1" == "--exclude-profile" && exclude_profile="yep"
+
+
 backup_profile() {
     profile="$1"
     cp -p $HOME/$profile $HOME/${profile}.pre-virtualenv-burrito
+}
+
+modify_profile() {
+    # startup virtualenv-burrito in the (bash_)profile
+    echo
+    start_code="\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh"
+    check_code="$VENVBURRITO_esc/startup.sh"
+    if [ -s ~/.bash_profile ]; then
+        if ! grep -q "$check_code" ~/.bash_profile; then
+            profile=".bash_profile"
+            backup_profile $profile
+            cat >> ~/$profile <<EOF
+
+# startup virtualenv-burrito
+if [ -f $VENVBURRITO_esc/startup.sh ]; then
+    . $VENVBURRITO_esc/startup.sh
+fi
+EOF
+        fi
+    else
+        if [ -s ~/.profile ]; then
+            if ! grep -q "$check_code" ~/.profile; then
+                profile=".profile"
+                backup_profile $profile
+                # match the .profile style and wrap paths in double quotes
+                cat >> ~/$profile <<EOF
+
+# if running bash
+if [ -n "\$BASH_VERSION" ]; then
+    # startup virtualenv-burrito
+    if [ -f "$VENVBURRITO_esc/startup.sh" ]; then
+        . "$VENVBURRITO_esc/startup.sh"
+    fi
+fi
+EOF
+            fi
+        else
+            profile=".bash_profile"
+            cat > ~/$profile <<EOF
+# include .bashrc if it exists
+if [ -f \$HOME/.bashrc ]; then
+    . \$HOME/.bashrc
+fi
+
+# startup virtualenv-burrito
+if [ -f $VENVBURRITO_esc/startup.sh ]; then
+    . $VENVBURRITO_esc/startup.sh
+fi
+EOF
+        fi
+    fi
+
+    if [ -n "$profile" ] && [ -s $HOME/${profile}.pre-virtualenv-burrito ]; then
+        backup=" The original\nwas saved to ~/$profile.pre-virtualenv-burrito."
+    fi
+    echo
+    echo "Code was added to $HOME/$profile so the virtualenvwrapper"
+    echo -e "environment will be available when you login.$backup"
 }
 
 
@@ -38,64 +100,11 @@ chmod 755 $VENVBURRITO/bin/virtualenv-burrito
 cmd="virtualenv-burrito upgrade firstrun"
 echo -e "\nRunning: $cmd"
 $VENVBURRITO/bin/$cmd
-echo
 
-# startup virtualenv-burrito in the (bash_)profile
-start_code="\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh"
-check_code="$VENVBURRITO_esc/startup.sh"
-if [ -s ~/.bash_profile ]; then
-    if ! grep -q "$check_code" ~/.bash_profile; then
-        profile=".bash_profile"
-        backup_profile $profile
-        cat >> ~/$profile <<EOF
+test -z "$exclude_profile" && modify_profile
 
-# startup virtualenv-burrito
-if [ -f $VENVBURRITO_esc/startup.sh ]; then
-    . $VENVBURRITO_esc/startup.sh
-fi
-EOF
-    fi
-else
-    if [ -s ~/.profile ]; then
-        if ! grep -q "$check_code" ~/.profile; then
-            profile=".profile"
-            backup_profile $profile
-            # match the .profile style and wrap paths in double quotes
-            cat >> ~/$profile <<EOF
-
-# if running bash
-if [ -n "\$BASH_VERSION" ]; then
-    # startup virtualenv-burrito
-    if [ -f "$VENVBURRITO_esc/startup.sh" ]; then
-        . "$VENVBURRITO_esc/startup.sh"
-    fi
-fi
-EOF
-        fi
-    else
-        profile=".bash_profile"
-        cat > ~/$profile <<EOF
-# include .bashrc if it exists
-if [ -f \$HOME/.bashrc ]; then
-    . \$HOME/.bashrc
-fi
-
-# startup virtualenv-burrito
-if [ -f $VENVBURRITO_esc/startup.sh ]; then
-    . $VENVBURRITO_esc/startup.sh
-fi
-EOF
-    fi
-fi
-
-if [ -s $HOME/${profile}.pre-virtualenv-burrito ]; then
-    backup=" The original\nwas saved to ~/$profile.pre-virtualenv-burrito."
-fi
 echo
 echo "Done with setup!"
-echo
-echo "Code was added to $HOME/$profile so the virtualenvwrapper"
-echo -e "environment will be available when you login.$backup"
 echo
 echo "To start now, run this:"
 echo "source $VENVBURRITO/startup.sh"
