@@ -99,7 +99,7 @@ curl $MASTER_URL/virtualenv-burrito.py > $VENVBURRITO/bin/virtualenv-burrito
 chmod 755 $VENVBURRITO/bin/virtualenv-burrito
 cmd="virtualenv-burrito upgrade firstrun"
 echo -e "\nRunning: $cmd"
-$VENVBURRITO/bin/$(echo cmd)
+$VENVBURRITO/bin/$(echo $cmd)
 
 test -z "$exclude_profile" && modify_profile
 
