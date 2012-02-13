@@ -76,7 +76,7 @@ you may want to prevent the install script (virtualenv-burrito.sh) from
 modifying your dot profile. To do this, either use the `--exclude-profile`
 option or set the environment variable `exclude_profile` to a non-empty value:
 
-    curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | exclude_profile=1 bash
+    curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | exclude_profile=1 $SHELL
 
 ## Caveat emptor ##
 
