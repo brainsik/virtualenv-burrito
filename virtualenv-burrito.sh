@@ -24,7 +24,7 @@ case "$kernel" in
 esac
 
 # provide a friendly way to set this environment variable
-test "$1" == "--exclude-profile" && exclude_profile="yep"
+test "$1" = "--exclude-profile" && exclude_profile="yep"
 
 
 backup_profile() {
