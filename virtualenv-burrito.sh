@@ -32,30 +32,46 @@ backup_profile() {
     cp -p $HOME/$profile $HOME/${profile}.pre-virtualenv-burrito
 }
 
-modify_profile() {
-    # startup virtualenv-burrito in the (bash_)profile
-    echo
-    start_code="\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh"
-    check_code="$VENVBURRITO_esc/startup.sh"
-    if [ -s ~/.bash_profile ]; then
-        if ! grep -q "$check_code" ~/.bash_profile; then
-            profile=".bash_profile"
-            backup_profile $profile
-            cat >> ~/$profile <<EOF
+write_simple_startup() {
+    profile="$1"
+    cat >> ~/$profile <<EOF
 
 # startup virtualenv-burrito
 if [ -f $VENVBURRITO_esc/startup.sh ]; then
     . $VENVBURRITO_esc/startup.sh
 fi
 EOF
+}
+
+modify_profile() {
+    # startup virtualenv-burrito when the shell starts
+    echo
+    unset profile
+    start_code="\n# startup virtualenv-burrito\n. $VENVBURRITO_esc/startup.sh"
+    check_code="$VENVBURRITO_esc/startup.sh"
+
+    # check for bash and zsh profiles
+    if [ -n "$BASH_VERSION" ] && [ -e ~/.bash_profile ]; then
+        if ! grep -q "$check_code" ~/.bash_profile; then
+            profile=".bash_profile"
+            backup_profile $profile
+            write_simple_startup $profile
         fi
-    else
-        if [ -s ~/.profile ]; then
-            if ! grep -q "$check_code" ~/.profile; then
-                profile=".profile"
-                backup_profile $profile
-                # match the .profile style and wrap paths in double quotes
-                cat >> ~/$profile <<EOF
+    elif [ -n "$ZSH_VERSION" ] && [ -e ~/.zprofile ]; then
+        if ! grep -q "$check_code" ~/.zprofile; then
+            profile=".zprofile"
+            backup_profile $profile
+            write_simple_startup $profile
+        fi
+    elif [ -n "$ZSH_VERSION" ]; then
+        profile=".zprofile"
+        write_simple_startup $profile
+    elif [ -n "$BASH_VERSION" ] && [ -s ~/.profile ]; then
+        if ! grep -q "$check_code" ~/.profile; then
+            profile=".profile"
+            backup_profile $profile
+            # match the .profile style and wrap paths in double quotes
+            cat >> ~/$profile <<EOF
 
 # if running bash
 if [ -n "\$BASH_VERSION" ]; then
@@ -65,29 +81,24 @@ if [ -n "\$BASH_VERSION" ]; then
     fi
 fi
 EOF
-            fi
-        else
-            profile=".bash_profile"
-            cat > ~/$profile <<EOF
+        fi
+    elif [ -n "$BASH_VERSION" ]; then
+        profile=".bash_profile"
+        cat > ~/$profile <<EOF
 # include .bashrc if it exists
 if [ -f \$HOME/.bashrc ]; then
-    . \$HOME/.bashrc
+. \$HOME/.bashrc
 fi
 
 # startup virtualenv-burrito
 if [ -f $VENVBURRITO_esc/startup.sh ]; then
-    . $VENVBURRITO_esc/startup.sh
+. $VENVBURRITO_esc/startup.sh
 fi
 EOF
-        fi
+    else
+        echo "Your shell profile could not be detected."
+        echo "Please contact @brainsik on Twitter or GitHub."
     fi
-
-    if [ -n "$profile" ] && [ -s $HOME/${profile}.pre-virtualenv-burrito ]; then
-        backup=" The original\nwas saved to ~/$profile.pre-virtualenv-burrito."
-    fi
-    echo
-    echo "Code was added to $HOME/$profile so the virtualenvwrapper"
-    echo -e "environment will be available when you login.$backup"
 }
 
 
@@ -101,7 +112,16 @@ cmd="virtualenv-burrito upgrade firstrun"
 echo -e "\nRunning: $cmd"
 $VENVBURRITO/bin/$(echo $cmd)
 
+unset profile
 test -z "$exclude_profile" && modify_profile
+if [ -n "$profile" ]; then
+    if [ -e $HOME/${profile}.pre-virtualenv-burrito ]; then
+        backup=" The original\nwas saved to ~/$profile.pre-virtualenv-burrito."
+    fi
+    echo
+    echo "Code was added to $HOME/$profile so the virtualenvwrapper"
+    echo -e "environment will be available when you login.$backup"
+fi
 
 echo
 echo "Done with setup!"
