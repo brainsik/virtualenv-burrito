@@ -1,4 +1,4 @@
-# Virtualenv Burrito [![status](http://stillmaintained.com/brainsik/virtualenv-burrito.png)](http://stillmaintained.com/brainsik/virtualenv-burrito) #
+# Virtualenv Burrito #
 
 With one command, have a working Python [virtualenv](http://pypi.python.org/pypi/virtualenv) +
 [virtualenvwrapper](http://pypi.python.org/pypi/virtualenvwrapper)
