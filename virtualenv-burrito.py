@@ -47,7 +47,7 @@ def get_installed_version(name):
     pkg = os.path.join(VENVBURRITO_LIB, "python", name)
     versions = []
     for egg in glob.glob("%s-*.egg" % pkg):
-        versions.append(map(int, egg.split('-')[1].split('.')))
+        versions.append(tuple(int(v) for v in egg.split('-')[1].split('.')))
     if versions:
         return ".".join(map(str, max(versions)))
 
