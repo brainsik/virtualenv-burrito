@@ -9,11 +9,14 @@ __version__ = "2.0.5"
 import sys
 import os
 import csv
-import urllib
 try:
-    import urllib2
+    from urllib import urlretrieve
 except ImportError: # Python >= 3
-    import urllib.request as urllib2
+    from urllib.request import urlretrieve
+try:
+    from urllib2 import urlopen
+except ImportError: # Python >= 3
+    from urllib.request import urlopen
 import shutil
 import glob
 import tempfile
@@ -60,7 +63,7 @@ def download(url, digest):
     name = url.split('/')[-1]
     print("  Downloading", name, "…")
     try:
-        filename = urllib.urlretrieve(url)[0]
+        filename = urlretrieve(url)[0]
     except Exception as e:
         sys.stderr.write("\nERROR - Unable to download %s: %s %s\n"
                          % (url, type(e), str(e)))
@@ -178,7 +181,7 @@ def upgrade_package(filename, name, version):
 def check_versions(selfcheck=True):
     """Return packages which can be upgraded."""
     try:
-        fp = urllib2.urlopen(VERSIONS_URL)
+        fp = urlopen(VERSIONS_URL)
     except Exception as e:
         sys.stderr.write("\nERROR - Couldn't open versions file at %s: %s %s\n"
                          % (VERSIONS_URL, type(e), str(e)))
