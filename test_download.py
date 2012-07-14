@@ -2,6 +2,7 @@
 import os
 import urllib2
 import csv
+import hashlib
 
 from nose.tools import eq_
 
@@ -27,6 +28,17 @@ def test_tarball_names():
     eq_(tarballs, set(PYPI_DOWNLOADS.keys()))
 
 
-def test_md5_exists():
+def test_shasum():
+    with open('versions.csv', 'r') as fo:
+        reader = csv.reader(fo)
+        for name, version, url, digest in reader:
+            if name.startswith('_'):
+                continue
+            sha1 = hashlib.sha1()
+            sha1.update(urllib2.urlopen(url).read())
+            eq_(digest, sha1.hexdigest())
+
+
+def test_md5_url_exists():
     for ball, md5sum in PYPI_DOWNLOADS.iteritems():
         urllib2.urlopen(PYPI_MD5_URL + md5sum)
