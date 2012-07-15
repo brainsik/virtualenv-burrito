@@ -1,6 +1,9 @@
 # encoding: utf-8
 import os
-import urllib2
+try:
+    import urllib2
+except ImportError: # Python >= 3
+    import urllib.request as urllib2
 import csv
 import hashlib
 
