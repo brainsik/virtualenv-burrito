@@ -64,7 +64,7 @@ def download(url, digest):
     Downloads and checks the SHA1 of the data matches the given hex digest.
     """
     name = url.split('/')[-1]
-    print("  Downloading % …" % name)
+    print("  Downloading %s …" % name)
     try:
         filename = urlretrieve(url)[0]
     except Exception:
