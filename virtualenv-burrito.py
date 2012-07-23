@@ -11,11 +11,11 @@ import os
 import csv
 try:
     from urllib import urlretrieve
-except ImportError: # Python >= 3
+except ImportError:  # Python >= 3
     from urllib.request import urlretrieve
 try:
     from urllib2 import urlopen
-except ImportError: # Python >= 3
+except ImportError:  # Python >= 3
     from urllib.request import urlopen
 import shutil
 import glob
@@ -36,7 +36,7 @@ except ImportError:  # Python < 2.4
 
 try:
     from StringIO import StringIO
-except ImportError: # Python >= 3
+except ImportError:  # Python >= 3
     from io import StringIO
 
 NAME = os.path.basename(__file__)
