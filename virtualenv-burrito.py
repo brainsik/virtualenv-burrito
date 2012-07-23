@@ -64,7 +64,7 @@ def download(url, digest):
     Downloads and checks the SHA1 of the data matches the given hex digest.
     """
     name = url.split('/')[-1]
-    print("  Downloading", name, "…")
+    print("  Downloading % …" % name)
     try:
         filename = urlretrieve(url)[0]
     except Exception:
@@ -81,9 +81,9 @@ def download(url, digest):
     if filehash.hexdigest() == digest:
         return filename
 
-    print ("\nThe file %s didn't look like we expected.\n"
-           "It may have been moved or tampered with. You should tell me:"
-           " @brainsik." % name)
+    print("\nThe file %s didn't look like we expected.\n"
+          "It may have been moved or tampered with. You should tell me:"
+          " @brainsik." % name)
     try:
         os.remove(filename)
     except OSError:
@@ -158,7 +158,7 @@ def upgrade_package(filename, name, version):
         owd = None
 
     realname = "%s-%s" % (name, version)
-    print("  Installing", realname)
+    print("  Installing %s" % realname)
 
     os.environ['PYTHONPATH'] = os.path.join(VENVBURRITO_LIB, "python")
     tmp = tempfile.mkdtemp(prefix='venvburrito.')
