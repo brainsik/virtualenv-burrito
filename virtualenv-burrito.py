@@ -9,17 +9,24 @@ __version__ = "2.0.5"
 import sys
 import os
 import csv
+import shutil
+import glob
+import tempfile
+
 try:
     from urllib import urlretrieve
 except ImportError:  # Python >= 3
     from urllib.request import urlretrieve
+
 try:
     from urllib2 import urlopen
 except ImportError:  # Python >= 3
     from urllib.request import urlopen
-import shutil
-import glob
-import tempfile
+
+try:
+    from StringIO import StringIO
+except ImportError:  # Python >= 3
+    from io import StringIO
 
 try:
     import hashlib
@@ -34,10 +41,6 @@ try:
 except ImportError:  # Python < 2.4
     sh = os.system
 
-try:
-    from StringIO import StringIO
-except ImportError:  # Python >= 3
-    from io import StringIO
 
 NAME = os.path.basename(__file__)
 VENVBURRITO = os.path.join(os.environ['HOME'], ".venvburrito")
