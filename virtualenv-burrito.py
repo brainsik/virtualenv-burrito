@@ -67,7 +67,8 @@ def download(url, digest):
     print("  Downloading", name, "…")
     try:
         filename = urlretrieve(url)[0]
-    except Exception as e:
+    except Exception:
+        e = sys.exc_info()[1]
         sys.stderr.write("\nERROR - Unable to download %s: %s %s\n"
                          % (url, type(e), str(e)))
         raise SystemExit(1)
@@ -185,7 +186,8 @@ def check_versions(selfcheck=True):
     """Return packages which can be upgraded."""
     try:
         fp = urlopen(VERSIONS_URL)
-    except Exception as e:
+    except Exception:
+        e = sys.exc_info()[1]
         sys.stderr.write("\nERROR - Couldn't open versions file at %s: %s %s\n"
                          % (VERSIONS_URL, type(e), str(e)))
         raise SystemExit(1)
