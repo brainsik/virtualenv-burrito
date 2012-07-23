@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.0.5"
+__version__ = "2.9"
 
 import sys
 import os
