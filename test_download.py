@@ -12,7 +12,7 @@ PYPI_DOWNLOADS = {
     # filename: md5sum
     'distribute-0.6.27.tar.gz': 'ecd75ea629fee6d59d26f88c39b2d291',
     'virtualenv-1.7.2.tar.gz': 'b5d63b05373a4344ae099a68875aae78',
-    'virtualenvwrapper-3.5.tar.gz': '69f51d186845b584c0ef09e258818fe7',
+    'virtualenvwrapper-3.6.tar.gz': '57d78305b75750a40985f206c80a280f',
 }
 
 
