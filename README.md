@@ -4,6 +4,8 @@ With one command, have a working Python [virtualenv](http://pypi.python.org/pypi
 [virtualenvwrapper](http://pypi.python.org/pypi/virtualenvwrapper)
 environment.
 
+[![Build Status](https://secure.travis-ci.org/brainsik/virtualenv-burrito.png?branch=master)](https://travis-ci.org/brainsik/virtualenv-burrito)
+
 ## Install ##
 
     curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | $SHELL
