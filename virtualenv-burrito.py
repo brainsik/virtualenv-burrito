@@ -52,7 +52,18 @@ def download(url, digest):
     name = url.split('/')[-1]
     print "  Downloading", name, "…"
     try:
-        filename = urllib.urlretrieve(url)[0]
+        proxy = dict()
+        if "http_proxy" in os.environ:
+            proxy["http"] = os.environ["http_proxy"].replace('http://', '')
+        if "https_proxy" in os.environ:
+            proxy["https"] = os.environ["https_proxy"].replace('https://', '')
+        if proxy:
+            opener = urllib2.build_opener(urllib2.ProxyHandler(proxy))
+            urllib2.install_opener(opener)
+        data = urllib2.urlopen(url).read()
+        filename = os.path.join("/tmp", os.path.basename(url))
+        with open(filename, "wb") as myfile:
+            myfile.write(data)
     except Exception, e:
         sys.stderr.write("\nERROR - Unable to download %s: %s %s\n"
                          % (url, type(e), str(e)))
