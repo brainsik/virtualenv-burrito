@@ -19,7 +19,7 @@ fi
 
 kernel=$(uname -s)
 case "$kernel" in
-    Darwin|Linux) ;;
+    Darwin|Linux|FreeBSD) ;;
     *) echo "Sadly, $kernel hasn't been tested. :'("; exit 1
 esac
 
