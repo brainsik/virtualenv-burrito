@@ -9,7 +9,6 @@ __version__ = "2.0.5"
 import sys
 import os
 import csv
-import urllib
 import urllib2
 import shutil
 import glob
@@ -61,8 +60,8 @@ def download(url, digest):
             opener = urllib2.build_opener(urllib2.ProxyHandler(proxy))
             urllib2.install_opener(opener)
         data = urllib2.urlopen(url).read()
-        filename = os.path.join("/tmp", os.path.basename(url))
-        with open(filename, "wb") as myfile:
+        with tempfile.NamedTemporaryFile("wb", delete=False) as myfile:
+            filename = myfile.name
             myfile.write(data)
     except Exception, e:
         sys.stderr.write("\nERROR - Unable to download %s: %s %s\n"
