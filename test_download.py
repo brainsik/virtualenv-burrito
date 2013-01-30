@@ -41,4 +41,8 @@ def test_shasum():
 
 def test_md5_url_exists():
     for ball, md5sum in PYPI_DOWNLOADS.iteritems():
-        urllib2.urlopen(PYPI_MD5_URL + md5sum)
+        url = PYPI_MD5_URL + md5sum
+        try:
+            urllib2.urlopen(url)
+        except urllib2.HTTPError as e:
+            assert False, "Failed to open %s: %s %s" % (url, type(e), e)
