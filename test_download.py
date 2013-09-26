@@ -11,6 +11,7 @@ PYPI_MD5_URL = 'http://pypi.python.org/pypi?:action=show_md5&digest='
 PYPI_DOWNLOADS = {
     # filename: md5sum
     'distribute-0.6.49.tar.gz': '89e68df89faf1966bcbd99a0033fbf8e',
+    'pip-1.4.1.tar.gz': '6afbb46aeb48abac658d4df742bff714',
     'virtualenv-1.9.1.tar.gz': '07e09df0adfca0b2d487e39a4bf2270a',
     'virtualenv-clone-0.2.4.tar.gz': '71168b975eaaa91e65559bcc79290b3b',
     'stevedore-0.12.tar.gz': '8bf1b7bed06bf5ab636784d161f1a494',
