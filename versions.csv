@@ -2,4 +2,5 @@ _virtualenv-burrito,2.0.5,https://raw.github.com/brainsik/virtualenv-burrito/mas
 distribute,0.6.49,https://pypi.python.org/packages/source/d/distribute/distribute-0.6.49.tar.gz,a62cfe21bd0e5e2913c5b576f872ca293b9bebca
 virtualenv,1.9.1,https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.9.1.tar.gz,b7d1704ec186a71c2fff1706896ecd294b708a55
 virtualenv-clone,0.2.4,https://pypi.python.org/packages/source/v/virtualenv-clone/virtualenv-clone-0.2.4.tar.gz,cbadef67b5809403b4e11b8ad5f809025902c256
+stevedore,0.12,https://pypi.python.org/packages/source/s/stevedore/stevedore-0.12.tar.gz,3287f39649a3bf5862ba07328d85fd69d130ad83
 virtualenvwrapper,4.1.1,https://pypi.python.org/packages/source/v/virtualenvwrapper/virtualenvwrapper-4.1.1.tar.gz,7ada69293fbc28a8bd7e911031c9de991624e12f
