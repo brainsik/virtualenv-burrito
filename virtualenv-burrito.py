@@ -158,7 +158,7 @@ def upgrade_package(filename, name, version):
             sh("%s setup.py easy_install --exclude-scripts --install-dir %s %s >/dev/null"
                % (sys.executable, os.path.join(VENVBURRITO_LIB, "python"), egg))
         else:
-            sh("%s setup.py install --home %s --install-scripts %s --no-compile >/dev/null"
+            sh("%s setup.py install --home %s --prefix='' --install-scripts %s --no-compile >/dev/null"
                % (sys.executable, VENVBURRITO, os.path.join(VENVBURRITO, "bin")))
         if name in ['virtualenv', 'virtualenvwrapper']:
             fix_bin_virtualenv()
