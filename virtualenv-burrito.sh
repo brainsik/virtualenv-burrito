@@ -85,14 +85,14 @@ EOF
     elif [ -n "$BASH_VERSION" ]; then
         profile=".bash_profile"
         cat > ~/$profile <<EOF
-# include .bashrc if it exists
-if [ -f \$HOME/.bashrc ]; then
-. \$HOME/.bashrc
-fi
-
 # startup virtualenv-burrito
 if [ -f $VENVBURRITO_esc/startup.sh ]; then
 . $VENVBURRITO_esc/startup.sh
+fi
+
+# include .bashrc if it exists
+if [ -f \$HOME/.bashrc ]; then
+. \$HOME/.bashrc
 fi
 EOF
     else
