@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.0.5"
+__version__ = "2.1"
 
 import sys
 import os
@@ -51,39 +51,24 @@ def download(url, digest):
     name = url.split('/')[-1]
     print "  Downloading", name, "…"
     try:
-        proxy = dict()
-        if "http_proxy" in os.environ:
-            proxy["http"] = os.environ["http_proxy"].replace('http://', '')
-        if "https_proxy" in os.environ:
-            proxy["https"] = os.environ["https_proxy"].replace('https://', '')
-        if proxy:
-            opener = urllib2.build_opener(urllib2.ProxyHandler(proxy))
-            urllib2.install_opener(opener)
-        data = urllib2.urlopen(url).read()
-        with tempfile.NamedTemporaryFile("wb", delete=False) as myfile:
-            filename = myfile.name
-            myfile.write(data)
+        download_data = urllib2.urlopen(url).read()
     except Exception, e:
         sys.stderr.write("\nERROR - Unable to download %s: %s %s\n"
                          % (url, type(e), str(e)))
         raise SystemExit(1)
+
     filehash = sha1()
+    filehash.update(download_data)
+    if filehash.hexdigest() != digest:
+        print ("\nThe file %s didn't look like we expected.\n"
+               "It may have been moved or tampered with. You should tell me:"
+               " @brainsik." % name)
+        raise SystemExit(1)
 
-    f = open(filename, 'rb')
-    filehash.update(f.read())
-    f.close()
-
-    if filehash.hexdigest() == digest:
-        return filename
-
-    print ("\nThe file %s didn't look like we expected.\n"
-           "It may have been moved or tampered with. You should tell me:"
-           " @brainsik." % name)
-    try:
-        os.remove(filename)
-    except OSError:
-        pass
-    raise SystemExit(1)
+    downloaded_file = tempfile.NamedTemporaryFile("wb", delete=False)
+    downloaded_file.write(download_data)
+    downloaded_file.close()
+    return downloaded_file.name
 
 
 def drop_startup_sh():
