@@ -10,6 +10,8 @@ environment.
 
     curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | $SHELL
 
+If you're behind a proxy, make sure your shell has the proper `http_proxy` and `https_proxy` variables set.
+
 ## Use
 
 See the
