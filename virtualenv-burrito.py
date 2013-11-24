@@ -151,7 +151,7 @@ def upgrade_package(filename, name, version):
 
         else:
             pip = os.path.join(VENVBURRITO, "bin", "pip")
-            sh("%s install --target %s . >/dev/null" % (pip, lib_python))
+            sh("%s install --target %s ." % (pip, lib_python))
 
     finally:
         os.chdir(owd or VENVBURRITO)
