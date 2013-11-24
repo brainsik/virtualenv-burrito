@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.5"
+__version__ = "2.5.1"
 
 import sys
 import os
@@ -115,16 +115,6 @@ def selfupdate(src):
     os.execl(dst, "virtualenv-burrito", "upgrade", "selfupdated")
 
 
-def untar(filename, realname):
-    tmp = tempfile.mkdtemp(prefix='venvburrito.')
-    try:
-        sh("tar xfz %s -C %s" % (filename, tmp))
-        return os.path.join(tmp, realname)
-    except Exception:
-        shutil.rmtree(tmp)
-        raise
-
-
 def _getcwd():
     try:
         return os.getcwd()
@@ -141,13 +131,12 @@ def upgrade_package(filename, name, version):
     lib_python = os.path.join(VENVBURRITO_LIB, "python")
     os.environ['PYTHONPATH'] = lib_python
 
-    tardir = None
+    owd = _getcwd()
+    tmp = tempfile.mkdtemp(prefix='venvburrito.')
     try:
-        # unpack the tarball if necessary
-        if name in ['distribute', 'pip']:
-            tardir = untar(filename, realname)
-            owd = _getcwd()
-            os.chdir(tardir)
+        # unpack the tarball
+        sh("tar xfz %s -C %s" % (filename, tmp))
+        os.chdir(os.path.join(tmp, realname))
 
         if name == 'distribute':
             # build and install the egg to avoid patching the system
@@ -162,12 +151,11 @@ def upgrade_package(filename, name, version):
 
         else:
             pip = os.path.join(VENVBURRITO, "bin", "pip")
-            sh("%s install --target %s %s >/dev/null" % (pip, lib_python, filename))
+            sh("%s install --target %s . >/dev/null" % (pip, lib_python))
 
     finally:
-        if tardir:
-            os.chdir(owd or VENVBURRITO)
-            shutil.rmtree(tardir)
+        os.chdir(owd or VENVBURRITO)
+        shutil.rmtree(tmp)
 
 
 def check_versions(selfcheck=True):
