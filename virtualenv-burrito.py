@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.1"
+__version__ = "2.5"
 
 import sys
 import os
@@ -115,51 +115,59 @@ def selfupdate(src):
     os.execl(dst, "virtualenv-burrito", "upgrade", "selfupdated")
 
 
-def fix_bin_virtualenv():
-    """Untie the virtualenv script from a specific version of Python"""
-    bin_virtualenv = os.path.join(VENVBURRITO, "bin", "virtualenv")
+def untar(filename, realname):
+    tmp = tempfile.mkdtemp(prefix='venvburrito.')
+    try:
+        sh("tar xfz %s -C %s" % (filename, tmp))
+        return os.path.join(tmp, realname)
+    except Exception:
+        shutil.rmtree(tmp)
+        raise
 
-    fi = open(bin_virtualenv, 'r')
-    fi.readline()  # skip the hash bang
 
-    fo = open(bin_virtualenv, 'w')
-    fo.write("#!/usr/bin/env python\n")
-    fo.write(fi.read())
-
-    fi.close()
-    fo.close()
+def _getcwd():
+    try:
+        return os.getcwd()
+    except OSError:
+        return None
 
 
 def upgrade_package(filename, name, version):
     """Install Python package in tarball `filename`."""
-    try:
-        owd = os.getcwd()
-    except OSError:
-        owd = None
 
     realname = "%s-%s" % (name, version)
     print "  Installing", realname
 
-    os.environ['PYTHONPATH'] = os.path.join(VENVBURRITO_LIB, "python")
-    tmp = tempfile.mkdtemp(prefix='venvburrito.')
+    lib_python = os.path.join(VENVBURRITO_LIB, "python")
+    os.environ['PYTHONPATH'] = lib_python
+
+    tardir = None
     try:
-        os.chdir(tmp)
-        sh("tar xfz %s" % filename)
-        os.chdir(os.path.join(tmp, realname))
+        # unpack the tarball if necessary
+        if name in ['distribute', 'pip']:
+            tardir = untar(filename, realname)
+            owd = _getcwd()
+            os.chdir(tardir)
+
         if name == 'distribute':
             # build and install the egg to avoid patching the system
             sh("%s setup.py bdist_egg" % sys.executable)
             egg = glob.glob(os.path.join(os.getcwd(), "dist", "*egg"))[0]
             sh("%s setup.py easy_install --exclude-scripts --install-dir %s %s >/dev/null"
-               % (sys.executable, os.path.join(VENVBURRITO_LIB, "python"), egg))
-        else:
+               % (sys.executable, lib_python, egg))
+
+        elif name == 'pip':
             sh("%s setup.py install --home %s --prefix='' --install-scripts %s --no-compile >/dev/null"
                % (sys.executable, VENVBURRITO, os.path.join(VENVBURRITO, "bin")))
-        if name in ['virtualenv', 'virtualenvwrapper']:
-            fix_bin_virtualenv()
+
+        else:
+            pip = os.path.join(VENVBURRITO, "bin", "pip")
+            sh("%s install --target %s %s >/dev/null" % (pip, lib_python, filename))
+
     finally:
-        os.chdir(owd or VENVBURRITO)
-        shutil.rmtree(tmp)
+        if tardir:
+            os.chdir(owd or VENVBURRITO)
+            shutil.rmtree(tardir)
 
 
 def check_versions(selfcheck=True):
