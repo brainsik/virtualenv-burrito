@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.5.2"
+__version__ = "2.5.3"
 
 import sys
 import os
@@ -37,7 +37,7 @@ def get_installed_version(name):
     """Returns current version of `name`."""
     pkg = os.path.join(VENVBURRITO_LIB, "python", name)
     versions = []
-    for egg in glob.glob("%s-*.egg" % pkg):
+    for egg in glob.glob("%s-*.egg*" % pkg):
         versions.append(map(int, egg.split('-')[1].split('.')))
     if versions:
         return ".".join(map(str, max(versions)))
