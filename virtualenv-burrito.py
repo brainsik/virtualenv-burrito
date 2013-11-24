@@ -200,7 +200,7 @@ def handle_upgrade(selfupdated=False, firstrun=False):
             os.mkdir(VENVBURRITO_LIB)
             os.mkdir(os.path.join(VENVBURRITO_LIB, "python"))
 
-    has_update = check_versions(selfupdated == False)
+    has_update = check_versions(selfupdated is False)
 
     # update other packages
     for update in has_update:
