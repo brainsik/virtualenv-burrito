@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.5.3"
+__version__ = "2.5.4"
 
 import sys
 import os
@@ -146,12 +146,12 @@ def upgrade_package(filename, name, version):
                % (sys.executable, lib_python, egg))
 
         elif name == 'pip':
-            sh("%s setup.py install --home %s --prefix='' --install-scripts %s --no-compile >/dev/null"
+            sh("%s setup.py install --prefix='' --home=%s --install-scripts %s --no-compile >/dev/null"
                % (sys.executable, VENVBURRITO, os.path.join(VENVBURRITO, "bin")))
 
         else:
             pip = os.path.join(VENVBURRITO, "bin", "pip")
-            sh("%s install --install-option='--home=%s' ." % (pip, VENVBURRITO))
+            sh("""%s install --install-option='--prefix="" --home=%s' .""" % (pip, VENVBURRITO))
     finally:
         os.chdir(owd or VENVBURRITO)
         shutil.rmtree(tmp)
