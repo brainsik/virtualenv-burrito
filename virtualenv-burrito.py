@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.6"
+__version__ = "2.6.1"
 
 import sys
 import os
@@ -81,7 +81,7 @@ export WORKON_HOME="$HOME/.virtualenvs"
 export PIP_VIRTUALENV_BASE="$WORKON_HOME"
 export PIP_RESPECT_VIRTUALENV=true
 
-venvb_py_path="$HOME/.venvburrito/lib/python:$HOME/.venvburrito/lib/python%s/site-packages"
+venvb_py_path="$HOME/.venvburrito/lib/python%s/site-packages:$HOME/.venvburrito/lib/python"
 if [ -z "$PYTHONPATH" ]; then
     export PYTHONPATH="$venvb_py_path"
 elif ! echo $PYTHONPATH | grep -q "$venvb_py_path"; then
