@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.5.6"
+__version__ = "2.6"
 
 import sys
 import os
@@ -13,6 +13,7 @@ import urllib2
 import shutil
 import glob
 import tempfile
+import platform
 
 try:
     import hashlib
@@ -72,13 +73,15 @@ def download(url, digest):
 
 
 def drop_startup_sh():
+    pyver = ".".join(platform.python_version().split(".")[:2])
+
     # create the startup script
     script = """
 export WORKON_HOME="$HOME/.virtualenvs"
 export PIP_VIRTUALENV_BASE="$WORKON_HOME"
 export PIP_RESPECT_VIRTUALENV=true
 
-venvb_py_path="$HOME/.venvburrito/lib/python"
+venvb_py_path="$HOME/.venvburrito/lib/python:$HOME/.venvburrito/lib/python%s/site-packages"
 if [ -z "$PYTHONPATH" ]; then
     export PYTHONPATH="$venvb_py_path"
 elif ! echo $PYTHONPATH | grep -q "$venvb_py_path"; then
@@ -97,7 +100,7 @@ if ! [ -e $HOME/.venvburrito/.firstrun ]; then
     echo "mkvirtualenv <cool-name>"
     touch $HOME/.venvburrito/.firstrun
 fi
-"""
+""" % pyver
     startup_sh = open(os.path.join(VENVBURRITO, "startup.sh"), 'w')
     startup_sh.write(script)
     startup_sh.close()
