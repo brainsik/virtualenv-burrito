@@ -5,6 +5,7 @@ With one command, have a working Python [virtualenv](http://pypi.python.org/pypi
 environment.
 
 [![Build Status](https://secure.travis-ci.org/brainsik/virtualenv-burrito.png?branch=master)](https://travis-ci.org/brainsik/virtualenv-burrito)
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DSKBAGSZJEF28&lc=US&item_name=Virtualenv%20Burrito&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted)
 
 ## Install ##
 
