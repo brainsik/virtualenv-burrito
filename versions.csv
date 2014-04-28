@@ -1,4 +1,4 @@
-_virtualenv-burrito,2.6.1,https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.py,60aa48f2ffdd1ef88412408d66c9f7d0ef89909a
+_virtualenv-burrito,2.6.1,https://raw.githubusercontent.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.py,60aa48f2ffdd1ef88412408d66c9f7d0ef89909a
 distribute,0.6.49,https://pypi.python.org/packages/source/d/distribute/distribute-0.6.49.tar.gz,a62cfe21bd0e5e2913c5b576f872ca293b9bebca
 pip,1.4.1,https://pypi.python.org/packages/source/p/pip/pip-1.4.1.tar.gz,9766254c7909af6d04739b4a7732cc29e9a48cb0
 virtualenv,1.10.1,https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz,0c441553f97a1ed68bb2032c9ab65e6c3bc38e24

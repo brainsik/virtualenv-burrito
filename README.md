@@ -9,7 +9,7 @@ environment.
 
 ## Install ##
 
-    curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | $SHELL
+    curl -s https://raw.githubusercontent.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | $SHELL
 
 If you're behind a proxy, make sure your shell has the proper `http_proxy` and `https_proxy` variables set.
 
@@ -81,7 +81,7 @@ you may want to prevent the install script (virtualenv-burrito.sh) from
 modifying your dot profile. To do this, either use the `--exclude-profile`
 option or set the environment variable `exclude_profile` to a non-empty value:
 
-    curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | exclude_profile=1 $SHELL
+    curl -s https://raw.githubusercontent.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | exclude_profile=1 $SHELL
 
 ## Caveat emptor ##
 
