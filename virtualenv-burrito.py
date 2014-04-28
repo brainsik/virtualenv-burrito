@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.6.1"
+__version__ = "2.6.2"
 
 import sys
 import os
@@ -31,7 +31,7 @@ except ImportError:  # Python < 2.4
 NAME = os.path.basename(__file__)
 VENVBURRITO = os.path.join(os.environ['HOME'], ".venvburrito")
 VENVBURRITO_LIB = os.path.join(VENVBURRITO, "lib")
-VERSIONS_URL = "https://raw.github.com/brainsik/virtualenv-burrito/master/versions.csv"
+VERSIONS_URL = "https://raw.githubusercontent.com/brainsik/virtualenv-burrito/master/versions.csv"
 
 
 def get_installed_version(name):
