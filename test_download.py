@@ -13,7 +13,7 @@ PYPI_DOWNLOADS = {
     'distribute-0.6.49.tar.gz': '89e68df89faf1966bcbd99a0033fbf8e',
     'pip-1.4.1.tar.gz': '6afbb46aeb48abac658d4df742bff714',
     'virtualenv-1.10.1.tar.gz': '3a04aa2b32c76c83725ed4d9918e362e',
-    'virtualenvwrapper-4.1.1.tar.gz': 'f18f2c612b936583a8ec0f7114b6637e',
+    'virtualenvwrapper-4.3.tar.gz': 'd526bc0a2cca27d3d37e5c42a4511a1f',
 }
 
 
