@@ -36,10 +36,13 @@ VERSIONS_URL = "https://raw.githubusercontent.com/brainsik/virtualenv-burrito/ma
 
 def get_installed_version(name):
     """Returns current version of `name`."""
-    pkg = os.path.join(VENVBURRITO_LIB, "python", name)
     versions = []
-    for egg in glob.glob("%s-*.egg*" % pkg):
-        versions.append(map(int, egg.split('-')[1].split('.')))
+    for pydir in glob.glob(os.path.join(VENVBURRITO_LIB, "python*")):
+        if os.path.exists(os.path.join(pydir, "site-packages")):
+            pydir = os.path.join(pydir, "site-packages")
+        for egg_path in glob.glob("%s-*.egg*" % os.path.join(pydir, name)):
+            egg = os.path.basename(egg_path)
+            versions.append(map(int, egg.split('-')[1].split('.')))
     if versions:
         return ".".join(map(str, max(versions)))
 
