@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.6.4"
+__version__ = "2.6.5"
 
 import sys
 import os
@@ -155,7 +155,7 @@ def upgrade_package(filename, name, version):
         sh("tar xfz %s -C %s" % (filename, tmp))
         os.chdir(os.path.join(tmp, realname))
 
-        if name == 'distribute':
+        if name in ['setuptools', 'distribute']:
             lib_python = os.path.join(VENVBURRITO_LIB, "python")
             # build and install the egg to avoid patching the system
             sh("%s setup.py bdist_egg" % sys.executable)
