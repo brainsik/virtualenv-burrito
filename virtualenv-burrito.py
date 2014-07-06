@@ -141,12 +141,13 @@ def _getcwd():
 
 def upgrade_package(filename, name, version):
     """Install Python package in tarball `filename`."""
+    pyver = "python%s" % get_python_maj_min_str()
+    lib_python = os.path.join(VENVBURRITO_LIB, pyver, "site-packages")
 
     pythonpath = ''
     for pydir in reversed(get_python_lib_paths()):
         pythonpath += "%s:" % pydir
-    pythonpath.rstrip(":")
-    os.environ['PYTHONPATH'] = pythonpath
+    os.environ['PYTHONPATH'] = pythonpath.rstrip(":")
 
     realname = "%s-%s" % (name, version)
     print "  Installing", realname
@@ -159,9 +160,6 @@ def upgrade_package(filename, name, version):
         os.chdir(os.path.join(tmp, realname))
 
         if name in ['setuptools', 'distribute']:
-            lib_python = os.path.join(VENVBURRITO_LIB,
-                                      "python%s" % get_python_maj_min_str(),
-                                      "site-packages")
             # build and install the egg to avoid patching the system
             sh("%s setup.py bdist_egg" % sys.executable)
             egg = glob.glob(os.path.join(os.getcwd(), "dist", "*egg"))[0]
@@ -169,8 +167,9 @@ def upgrade_package(filename, name, version):
                % (sys.executable, lib_python, egg))
 
         elif name == 'pip':
-            sh("%s setup.py install --prefix='' --home='%s' --install-scripts %s --no-compile >/dev/null"
-               % (sys.executable, VENVBURRITO, os.path.join(VENVBURRITO, "bin")))
+            install_bin = os.path.join(VENVBURRITO, "bin")
+            sh("%s setup.py install --prefix='' --home='%s' --install-lib %s --install-scripts %s --no-compile >/dev/null"
+               % (sys.executable, VENVBURRITO, lib_python, install_bin))
 
         else:
             pip = os.path.join(VENVBURRITO, "bin", "pip")
