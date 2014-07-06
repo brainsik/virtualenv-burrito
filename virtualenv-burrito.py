@@ -212,7 +212,9 @@ def check_versions(selfcheck=True):
 def handle_upgrade(selfupdated=False, firstrun=False):
     """Handles the upgrade command."""
     if os.path.exists(VENVBURRITO_LIB):
-        if not os.path.isdir(os.path.join(VENVBURRITO_LIB, "python")):
+        pyver = "python%s" % get_python_maj_min_str()
+        if not (os.path.isdir(os.path.join(VENVBURRITO_LIB, "python"))
+                or os.path.isdir(os.path.join(VENVBURRITO_LIB, pyver))):
             print "! Removing old v1 packages and doing fresh v2 install"
             shutil.rmtree(VENVBURRITO_LIB)
             os.mkdir(VENVBURRITO_LIB)
