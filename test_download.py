@@ -6,7 +6,7 @@ import hashlib
 
 from nose.tools import eq_
 
-PYPI_MD5_URL = 'http://pypi.python.org/pypi?:action=show_md5&digest='
+PYPI_MD5_URL = 'https://pypi.python.org/pypi?:action=show_md5&digest='
 
 PYPI_DOWNLOADS = {
     # filename: md5sum
