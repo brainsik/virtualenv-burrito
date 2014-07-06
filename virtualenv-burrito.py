@@ -142,13 +142,19 @@ def _getcwd():
 def upgrade_package(filename, name, version):
     """Install Python package in tarball `filename`."""
 
+    lib_python = os.path.join(VENVBURRITO_LIB,
+                              "python%s" % get_python_maj_min_str())
+
+    pythonpath = ''
+    for pydir in reversed(get_python_lib_paths()):
+        pythonpath += "%s:" % pydir
+    if not lib_python in pythonpath:
+        pythonpath += "%s"
+    pythonpath.rstrip(":")
+    os.environ['PYTHONPATH'] = pythonpath
+
     realname = "%s-%s" % (name, version)
     print "  Installing", realname
-
-    os.environ['PYTHONPATH'] = ''
-    for pydir in reversed(get_python_lib_paths()):
-        os.environ['PYTHONPATH'] += "%s:" % pydir
-    os.environ['PYTHONPATH'] = os.environ['PYTHONPATH'].rstrip(':')
 
     owd = _getcwd()
     tmp = tempfile.mkdtemp(prefix='venvburrito.')
@@ -158,8 +164,6 @@ def upgrade_package(filename, name, version):
         os.chdir(os.path.join(tmp, realname))
 
         if name in ['setuptools', 'distribute']:
-            lib_python = os.path.join(VENVBURRITO_LIB,
-                                      "python%s" % get_python_maj_min_str())
             # build and install the egg to avoid patching the system
             sh("%s setup.py bdist_egg" % sys.executable)
             egg = glob.glob(os.path.join(os.getcwd(), "dist", "*egg"))[0]

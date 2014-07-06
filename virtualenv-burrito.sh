@@ -102,7 +102,7 @@ EOF
 }
 
 
-mkdir -p $VENVBURRITO/{bin,lib/python}
+mkdir -p $VENVBURRITO/{bin,lib}
 test -d $HOME/.virtualenvs || mkdir $HOME/.virtualenvs
 
 echo "Downloading virtualenv-burrito command"
