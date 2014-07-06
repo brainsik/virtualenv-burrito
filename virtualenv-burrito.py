@@ -167,12 +167,12 @@ def upgrade_package(filename, name, version):
                % (sys.executable, lib_python, egg))
 
         elif name == 'pip':
-            install_bin = os.path.join(VENVBURRITO, "bin")
+            libexec = os.path.join(VENVBURRITO, "libexec")
             sh("%s setup.py install --prefix='' --home='%s' --install-lib %s --install-scripts %s --no-compile >/dev/null"
-               % (sys.executable, VENVBURRITO, lib_python, install_bin))
+               % (sys.executable, VENVBURRITO, lib_python, libexec))
 
         else:
-            pip = os.path.join(VENVBURRITO, "bin", "pip")
+            pip = os.path.join(VENVBURRITO, "libexec", "pip")
             sh("%s install --install-option='--prefix=%s' ." % (pip, VENVBURRITO))
     finally:
         os.chdir(owd or VENVBURRITO)
@@ -211,13 +211,8 @@ def check_versions(selfcheck=True):
 def handle_upgrade(selfupdated=False, firstrun=False):
     """Handles the upgrade command."""
     if os.path.exists(VENVBURRITO_LIB):
-        should_rmrf = False
-        if os.path.exists(os.path.join(VENVBURRITO_LIB, "python")):
-            should_rmrf = True  # old "lib/python" dir exists
-        elif not glob.glob(os.path.join(VENVBURRITO_LIB, "python?*")):
-            should_rmrf = True  # hella old v1 setup (or alien abduction)
-        if should_rmrf:
-            print "! Removing old lib setup and doing fresh install"
+        if not os.path.exists(os.path.join(VENVBURRITO, "libexec")):
+            print "! Removing burrito < 2.7 setup and preparing fresh wrap"
             shutil.rmtree(VENVBURRITO_LIB)
             pyver = "python%s" % get_python_maj_min_str()
             os.mkdir(VENVBURRITO_LIB)
