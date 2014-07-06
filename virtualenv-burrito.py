@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.6.5"
+__version__ = "2.7"
 
 import sys
 import os
@@ -211,13 +211,18 @@ def check_versions(selfcheck=True):
 def handle_upgrade(selfupdated=False, firstrun=False):
     """Handles the upgrade command."""
     if os.path.exists(VENVBURRITO_LIB):
-        pyver = "python%s" % get_python_maj_min_str()
-        if not (os.path.isdir(os.path.join(VENVBURRITO_LIB, "python"))
-                or os.path.isdir(os.path.join(VENVBURRITO_LIB, pyver))):
-            print "! Removing old v1 packages and doing fresh v2 install"
+        should_rmrf = False
+        if os.path.exists(os.path.join(VENVBURRITO_LIB, "python")):
+            should_rmrf = True  # old "lib/python" dir exists
+        elif not glob.glob(os.path.join(VENVBURRITO_LIB, "python?*")):
+            should_rmrf = True  # hella old v1 setup (or alien abduction)
+        if should_rmrf:
+            print "! Removing old lib setup and doing fresh install"
             shutil.rmtree(VENVBURRITO_LIB)
+            pyver = "python%s" % get_python_maj_min_str()
             os.mkdir(VENVBURRITO_LIB)
-            os.mkdir(os.path.join(VENVBURRITO_LIB, "python"))
+            os.mkdir(os.path.join(VENVBURRITO_LIB, pyver))
+            os.mkdir(os.path.join(VENVBURRITO_LIB, pyver, "site-packages"))
 
     has_update = check_versions(selfupdated is False)
 
