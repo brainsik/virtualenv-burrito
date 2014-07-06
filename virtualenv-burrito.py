@@ -271,7 +271,7 @@ def main(argv):
         usage(returncode=0)
 
     if argv[1] in ['version', '--version', '-V']:
-        print "virtualenv-burrito v%s" % __version__
+        print "virtualenv-burrito %s from %s" % (__version__, __file__)
         raise SystemExit(0)
 
     if argv[1] in ['upgrade', 'update']:
