@@ -34,12 +34,21 @@ VENVBURRITO_LIB = os.path.join(VENVBURRITO, "lib")
 VERSIONS_URL = "https://raw.githubusercontent.com/brainsik/virtualenv-burrito/master/versions.csv"
 
 
-def get_installed_version(name):
-    """Returns current version of `name`."""
-    versions = []
+def get_python_lib_paths():
+    lib_paths = []
     for pydir in glob.glob(os.path.join(VENVBURRITO_LIB, "python*")):
         if os.path.exists(os.path.join(pydir, "site-packages")):
             pydir = os.path.join(pydir, "site-packages")
+        lib_paths.append(pydir)
+    lib_paths.sort()
+    lib_paths.reverse()
+    return lib_paths
+
+
+def get_installed_version(name):
+    """Returns current version of `name`."""
+    versions = []
+    for pydir in get_python_lib_paths():
         for egg_path in glob.glob("%s-*.egg*" % os.path.join(pydir, name)):
             egg = os.path.basename(egg_path)
             versions.append(map(int, egg.split('-')[1].split('.')))
@@ -134,8 +143,10 @@ def upgrade_package(filename, name, version):
     realname = "%s-%s" % (name, version)
     print "  Installing", realname
 
-    lib_python = os.path.join(VENVBURRITO_LIB, "python")
-    os.environ['PYTHONPATH'] = lib_python
+    os.environ['PYTHONPATH'] = ''
+    for pydir in reversed(get_python_lib_paths()):
+        os.environ['PYTHONPATH'] += "%s:" % pydir
+    os.environ['PYTHONPATH'] = os.environ['PYTHONPATH'].rstrip(':')
 
     owd = _getcwd()
     tmp = tempfile.mkdtemp(prefix='venvburrito.')
@@ -145,6 +156,7 @@ def upgrade_package(filename, name, version):
         os.chdir(os.path.join(tmp, realname))
 
         if name == 'distribute':
+            lib_python = os.path.join(VENVBURRITO_LIB, "python")
             # build and install the egg to avoid patching the system
             sh("%s setup.py bdist_egg" % sys.executable)
             egg = glob.glob(os.path.join(os.getcwd(), "dist", "*egg"))[0]
