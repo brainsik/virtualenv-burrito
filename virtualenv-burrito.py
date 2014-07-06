@@ -159,8 +159,9 @@ def upgrade_package(filename, name, version):
         os.chdir(os.path.join(tmp, realname))
 
         if name in ['setuptools', 'distribute']:
-            lib_python = os.path.join(
-                VENVBURRITO_LIB, "python%s" % get_python_maj_min_str())
+            lib_python = os.path.join(VENVBURRITO_LIB,
+                                      "python%s" % get_python_maj_min_str(),
+                                      "site-packages")
             # build and install the egg to avoid patching the system
             sh("%s setup.py bdist_egg" % sys.executable)
             egg = glob.glob(os.path.join(os.getcwd(), "dist", "*egg"))[0]

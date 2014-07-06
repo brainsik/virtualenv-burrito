@@ -103,7 +103,7 @@ EOF
 
 
 pyver=$(python -c 'import platform;print ".".join(platform.python_version().split(".")[:2])')
-mkdir -p $VENVBURRITO/{bin,lib/python$pyver}
+mkdir -p $VENVBURRITO/{bin,lib/python$pyver/site-packages}
 test -d $HOME/.virtualenvs || mkdir $HOME/.virtualenvs
 
 echo "Downloading virtualenv-burrito command"
