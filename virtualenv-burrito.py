@@ -270,6 +270,10 @@ def main(argv):
     if argv[1] in ['help', '--help', '-h', '-?']:
         usage(returncode=0)
 
+    if argv[1] in ['version', '--version', '-V']:
+        print "virtualenv-burrito v%s" % __version__
+        raise SystemExit(0)
+
     if argv[1] in ['upgrade', 'update']:
         if len(argv) > 2:
             if argv[2] in ['selfupdated', 'no-selfcheck']:
