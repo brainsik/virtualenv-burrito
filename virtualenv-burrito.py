@@ -216,7 +216,7 @@ def handle_upgrade(selfupdated=False, firstrun=False):
 
             # nuke old lib and get pip out of the bin PATH
             shutil.rmtree(VENVBURRITO_LIB)
-            for pip in glob.glob(os.path.join(VENVBURRITO, "bin"), "pip*"):
+            for pip in glob.glob(os.path.join(VENVBURRITO, "bin", "pip*")):
                 os.remove(pip)
 
             # create versioned python site-packages dir
