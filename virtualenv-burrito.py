@@ -213,7 +213,13 @@ def handle_upgrade(selfupdated=False, firstrun=False):
     if os.path.exists(VENVBURRITO_LIB):
         if not os.path.exists(os.path.join(VENVBURRITO, "libexec")):
             print "! Removing burrito < 2.7 setup and preparing fresh wrap"
+
+            # nuke old lib and get pip out of the bin PATH
             shutil.rmtree(VENVBURRITO_LIB)
+            for pip in glob.glob(os.path.join(VENVBURRITO, "bin"), "pip*"):
+                os.remove(pip)
+
+            # create versioned python site-packages dir
             pyver = "python%s" % get_python_maj_min_str()
             os.mkdir(VENVBURRITO_LIB)
             os.mkdir(os.path.join(VENVBURRITO_LIB, pyver))
