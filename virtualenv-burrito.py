@@ -149,7 +149,7 @@ def upgrade_package(filename, name, version):
     for pydir in reversed(get_python_lib_paths()):
         pythonpath += "%s:" % pydir
     if not lib_python in pythonpath:
-        pythonpath += "%s"
+        pythonpath += lib_python
     pythonpath.rstrip(":")
     os.environ['PYTHONPATH'] = pythonpath
 
