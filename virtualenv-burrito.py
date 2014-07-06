@@ -34,6 +34,10 @@ VENVBURRITO_LIB = os.path.join(VENVBURRITO, "lib")
 VERSIONS_URL = "https://raw.githubusercontent.com/brainsik/virtualenv-burrito/experimental/versions.csv"
 
 
+def get_python_maj_min_str():
+    return ".".join(platform.python_version().split(".")[:2])
+
+
 def get_python_lib_paths():
     lib_paths = []
     for pydir in glob.glob(os.path.join(VENVBURRITO_LIB, "python*")):
@@ -85,8 +89,6 @@ def download(url, digest):
 
 
 def drop_startup_sh():
-    pyver = ".".join(platform.python_version().split(".")[:2])
-
     # create the startup script
     script = """
 export WORKON_HOME="$HOME/.virtualenvs"
@@ -112,7 +114,7 @@ if ! [ -e $HOME/.venvburrito/.firstrun ]; then
     echo "mkvirtualenv <cool-name>"
     touch $HOME/.venvburrito/.firstrun
 fi
-""" % pyver
+""" % get_python_maj_min_str()
     startup_sh = open(os.path.join(VENVBURRITO, "startup.sh"), 'w')
     startup_sh.write(script)
     startup_sh.close()
@@ -156,7 +158,8 @@ def upgrade_package(filename, name, version):
         os.chdir(os.path.join(tmp, realname))
 
         if name in ['setuptools', 'distribute']:
-            lib_python = os.path.join(VENVBURRITO_LIB, "python")
+            lib_python = os.path.join(VENVBURRITO_LIB,
+                                      "python%s" % get_python_maj_min_str())
             # build and install the egg to avoid patching the system
             sh("%s setup.py bdist_egg" % sys.executable)
             egg = glob.glob(os.path.join(os.getcwd(), "dist", "*egg"))[0]
