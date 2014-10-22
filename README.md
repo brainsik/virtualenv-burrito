@@ -13,6 +13,11 @@ environment.
 
 If you're behind a proxy, make sure your shell has the proper `http_proxy` and `https_proxy` variables set.
 
+If you're using a Linux desktop terminal, you may need to configure it to use a
+"login shell". For gnome-terminal this can be done by running:
+
+    gconftool-2 -t bool -s /apps/gnome-terminal/profiles/Default/login_shell true
+
 ## Use
 
 See the
