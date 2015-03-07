@@ -10,7 +10,7 @@ PYPI_MD5_URL = 'https://pypi.python.org/pypi?:action=show_md5&digest='
 
 PYPI_DOWNLOADS = {
     # filename: md5sum
-    'setuptools-8.2.tar.gz': '631c3b2d0e6868d77fcf11d9de8fe7a7',
+    'setuptools-12.3.tar.gz': '67614b6d560fa4f240e99cd553ec7f32',
     'pip-1.4.1.tar.gz': '6afbb46aeb48abac658d4df742bff714',
     'virtualenv-12.0.2.tar.gz': 'cd43c130badf76ecb3c6bf72a14c42f6',
     'virtualenvwrapper-4.3.1.tar.gz': '4327d04b0e65d4229352454ab8ce3f37',
