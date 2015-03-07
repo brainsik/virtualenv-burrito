@@ -12,7 +12,7 @@ PYPI_DOWNLOADS = {
     # filename: md5sum
     'setuptools-12.3.tar.gz': '67614b6d560fa4f240e99cd553ec7f32',
     'pip-1.4.1.tar.gz': '6afbb46aeb48abac658d4df742bff714',
-    'virtualenv-12.0.2.tar.gz': 'cd43c130badf76ecb3c6bf72a14c42f6',
+    'virtualenv-12.0.7.tar.gz': 'e08796f79d112f3bfa6653cc10840114',
     'virtualenvwrapper-4.3.1.tar.gz': '4327d04b0e65d4229352454ab8ce3f37',
 }
 
