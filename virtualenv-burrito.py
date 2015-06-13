@@ -4,7 +4,7 @@
 #   virtualenv-burrito.py — manages the Virtualenv Burrito environment
 #
 
-__version__ = "2.7"
+__version__ = "2.7.1"
 
 import sys
 import os
@@ -173,7 +173,7 @@ def upgrade_package(filename, name, version):
 
         else:
             pip = os.path.join(VENVBURRITO, "libexec", "pip")
-            sh("%s install --install-option='--prefix=%s' ." % (pip, VENVBURRITO))
+            sh("%s install --ignore-installed --install-option='--prefix=%s' ." % (pip, VENVBURRITO))
     finally:
         os.chdir(owd or VENVBURRITO)
         shutil.rmtree(tmp)
