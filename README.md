@@ -7,6 +7,12 @@ environment.
 [![Build Status](https://travis-ci.org/brainsik/virtualenv-burrito.svg?branch=master)](https://travis-ci.org/brainsik/virtualenv-burrito)
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DSKBAGSZJEF28&lc=US&item_name=Virtualenv%20Burrito&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted)
 
+## Requirements ##
+
+Python 2.x on Linux or OS X. To check your Python version, run:
+
+    python -V
+
 ## Install ##
 
     curl -sL https://raw.githubusercontent.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | $SHELL
@@ -18,7 +24,7 @@ If you're using a Linux desktop terminal, you may need to configure it to use a
 
     gconftool-2 -t bool -s /apps/gnome-terminal/profiles/Default/login_shell true
 
-## Use
+## Use ##
 
 See the
 [virtualenvwrapper quickstart](http://www.doughellmann.com/docs/virtualenvwrapper/install.html#quick-start)
