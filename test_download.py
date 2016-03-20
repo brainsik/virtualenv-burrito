@@ -4,7 +4,6 @@ import urllib2
 import csv
 import hashlib
 
-from nose.tools import eq_
 
 PYPI_MD5_URL = 'https://pypi.python.org/pypi?:action=show_md5&digest='
 
@@ -15,6 +14,11 @@ PYPI_DOWNLOADS = {
     'virtualenv-15.0.1.tar.gz': '28d76a0d9cbd5dc42046dd14e76a6ecc',
     'virtualenvwrapper-4.7.1.tar.gz': '3789e0998818d9a8a4ec01cfe2a339b2',
 }
+
+
+def eq_(a, b, msg=None):
+    if not a == b:
+        raise AssertionError(msg or "%r != %r" % (a, b))
 
 
 def test_tarball_names():
