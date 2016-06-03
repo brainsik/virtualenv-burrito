@@ -1,5 +1,5 @@
 _virtualenv-burrito,2.7.1,https://raw.githubusercontent.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.py,8cf9ca1752c9e459d9a39a87bd6817f252304068
-setuptools,20.3,https://pypi.python.org/packages/source/s/setuptools/setuptools-20.3.tar.gz,b03b8ee60841dd6db62d8a8f0264396151ee03d3
-pip,8.1.1,https://pypi.python.org/packages/source/p/pip/pip-8.1.1.tar.gz,6c6076664a51ac14849696df65ace8d44e42dea7
-virtualenv,15.0.1,https://pypi.python.org/packages/source/v/virtualenv/virtualenv-15.0.1.tar.gz,9fcdaaf7e822dd55c8acf06a464f21c1a90cd310
-virtualenvwrapper,4.7.1,https://pypi.python.org/packages/source/v/virtualenvwrapper/virtualenvwrapper-4.7.1.tar.gz,6db18476292a78eeb846137dfadfa71dbfa2542c
+setuptools,21.2.1,https://pypi.python.org/packages/13/e8/35d9c7528b3c266a17e888bea1e02eb061e9ab6cdabc7107dfb7da83a1d2/setuptools-21.2.1.tar.gz,8c873b421ced7fa86e2d2ea62c08d73d41303812
+pip,8.1.2,https://pypi.python.org/packages/e7/a8/7556133689add8d1a54c0b14aeff0acb03c64707ce100ecd53934da1aa13/pip-8.1.2.tar.gz,1c13c247967ec5bee6de5fd104c5d78ba30951c7
+virtualenv,15.0.2,https://pypi.python.org/packages/5c/79/5dae7494b9f5ed061cff9a8ab8d6e1f02db352f3facf907d9eb614fb80e9/virtualenv-15.0.2.tar.gz,02ab6cbe6313418ae70f88730fbf8a7482c15bad
+virtualenvwrapper,4.7.1,https://pypi.python.org/packages/2f/76/6d39003e32429604bf1df9128652d90bec6015c62f66358df1f2e73e7fb3/virtualenvwrapper-4.7.1.tar.gz,6db18476292a78eeb846137dfadfa71dbfa2542c
