@@ -94,6 +94,12 @@ option or set the environment variable `exclude_profile` to a non-empty value:
 
     curl -sL https://raw.githubusercontent.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | exclude_profile=1 $SHELL
 
+## Uninstall ##
+
+1. Edit your shell profile (e.g., .profile, .bash_profile, etc.) and remove the
+few lines of code added.
+1. `rm -rf ~/.venvburrito`
+
 ## Caveat emptor ##
 
 This simple script is meant for people who do not have virtualenv installed.
