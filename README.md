@@ -27,9 +27,9 @@ If you're using a Linux desktop terminal, you may need to configure it to use a
 ## Use ##
 
 See the
-[virtualenvwrapper quickstart](http://www.doughellmann.com/docs/virtualenvwrapper/install.html#quick-start)
+[virtualenvwrapper quickstart](https://virtualenvwrapper.readthedocs.io/en/latest/install.html#quick-start)
 or read the
-[virtualenvwrapper command reference](http://www.doughellmann.com/docs/virtualenvwrapper/command_ref.html).
+[virtualenvwrapper command reference](https://virtualenvwrapper.readthedocs.io/en/latest/command_ref.html).
 
 ### Quickstart ###
 
@@ -45,7 +45,7 @@ To switch between virtualenvs:
 
     workon othername
 
-## Upgrade ##
+### Upgrade ###
 
 To upgrade to the latest virtualenv + virtualenvwrapper packages:
 
