@@ -174,8 +174,15 @@ if __name__ == '__main__':
     pkg = get_pkg('virtualenv')
     if pkg != versions['virtualenv']:
         upgrades['virtualenv'] = pkg
+
+        # HACK: virtualenv is missing it's 15.2.0 tag
+        if pkg['version'] == '15.2.0':
+            ref = '61255cf0397a7d5f73e1f070a3d32ed620c63780'
+        else:
+            ref = pkg['version']
+
         # Check the contained files from GitHub
-        files = fetch_json('https://api.github.com/repos/pypa/virtualenv/contents/virtualenv_support?ref=%s' % pkg['version'])
+        files = fetch_json('https://api.github.com/repos/pypa/virtualenv/contents/virtualenv_support?ref=%s' % ref)
 
         for name in ('pip', 'setuptools'):
             for f in files:
