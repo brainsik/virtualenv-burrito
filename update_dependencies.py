@@ -26,6 +26,12 @@ def out(msg, err=False, nl=True):
     fp.flush()
 
 
+def fetch_json(url):
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.json()
+
+
 def shasum(url):
     out('-> getting shasum .', nl=False)
     m = sha1()
@@ -127,14 +133,14 @@ def extract_test_download():
 
 
 def get_latest(pkg):
-    return requests.get(pypi_index_url % pkg).json()['info']['version']
+    return fetch_json(pypi_index_url % pkg)['info']['version']
 
 
 def get_pkg(pkg, version=None):
     if version is None:
         version = get_latest(pkg)
     out('fetching %s==%s' % (pkg, version))
-    for url in requests.get(pypi_version_url % (pkg, version)).json()['urls']:
+    for url in fetch_json(pypi_version_url % (pkg, version))['urls']:
         if url['packagetype'] == 'sdist':
             return {
                 'version': version,
@@ -169,7 +175,7 @@ if __name__ == '__main__':
     if pkg != versions['virtualenv']:
         upgrades['virtualenv'] = pkg
         # Check the contained files from GitHub
-        files = requests.get('https://api.github.com/repos/pypa/virtualenv/contents/virtualenv_support?ref=%s' % pkg['version']).json()
+        files = fetch_json('https://api.github.com/repos/pypa/virtualenv/contents/virtualenv_support?ref=%s' % pkg['version'])
 
         for name in ('pip', 'setuptools'):
             for f in files:
