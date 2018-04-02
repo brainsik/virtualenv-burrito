@@ -3,6 +3,7 @@
 import sys
 import re
 import requests
+import os.path
 from hashlib import sha1
 from subprocess import check_call
 
@@ -105,8 +106,8 @@ def update_test_download(upgrades):
                     tmp = l.strip()
                     for n in names:
                         if l.startswith("    '%s-" % n):
-                            l = "    '%s-%s.tar.gz': '%s',\n" % (
-                                n, upgrades[n]['version'], upgrades[n]['md5sum'],
+                            l = "    '%s': '%s',\n" % (
+                                os.path.basename(upgrades[n]['url']), upgrades[n]['md5sum'],
                             )
             fp.write(l)
 
