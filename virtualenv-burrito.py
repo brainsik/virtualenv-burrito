@@ -155,8 +155,12 @@ def upgrade_package(filename, name, version):
     owd = _getcwd()
     tmp = tempfile.mkdtemp(prefix='venvburrito.')
     try:
-        # unpack the tarball
-        sh("tar xfz %s -C %s" % (filename, tmp))
+        # unpack the zip or tarball
+        if name == 'setuptools':
+            sh("unzip %s -d %s" % (filename, tmp))
+        else:
+            sh("tar xfz %s -C %s" % (filename, tmp))
+
         os.chdir(os.path.join(tmp, realname))
 
         if name in ['setuptools', 'distribute']:
