@@ -3,9 +3,10 @@ import os
 import urllib2
 import csv
 import hashlib
+import json
 
 
-PYPI_MD5_URL = 'https://pypi.python.org/pypi?:action=show_md5&digest='
+PYPI_JSON_URL = 'https://pypi.org/pypi/%s/json'
 
 PYPI_DOWNLOADS = {
     # filename: md5sum
@@ -46,8 +47,24 @@ def test_shasum():
 
 def test_md5_url_exists():
     for ball, md5sum in PYPI_DOWNLOADS.iteritems():
-        url = PYPI_MD5_URL + md5sum
+        if ball.endswith('.zip'):
+            filename = ball[:-4]
+        else:
+            # .tar.gz
+            filename = ball[:-7]
+        package, release = filename.split('-', 1)
         try:
-            urllib2.urlopen(url)
+            data = json.load(urllib2.urlopen(PYPI_JSON_URL % package))
         except urllib2.HTTPError as e:
             assert False, "Failed to open %s: %s %s" % (url, type(e), e)
+
+        found = False
+        release = data['releases'][release]
+        for file in release:
+            if file['filename'] == ball:
+                assert file['md5_digest'] == md5sum
+                found = True
+                break
+
+        if not found:
+            assert False, 'Missing file %s %s' % (ball, md5sum)

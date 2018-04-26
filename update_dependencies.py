@@ -7,8 +7,8 @@ import os.path
 from hashlib import sha1
 from subprocess import check_call
 
-pypi_index_url = 'https://pypi.python.org/pypi/%s/json'
-pypi_version_url = 'https://pypi.python.org/pypi/%s/%s/json'
+pypi_index_url = 'https://pypi.org/pypi/%s/json'
+pypi_version_url = 'https://pypi.org/pypi/%s/%s/json'
 
 # Order here matters since this is used for writing to files
 software = ('_virtualenv-burrito', 'setuptools', 'pip', 'virtualenv', 'virtualenvwrapper')
@@ -126,7 +126,7 @@ def extract_test_download():
                     continue
                 if l[0] == '}':
                     return files
-                name, version, md5sum = re.match(r'^\'([a-z]+)?-((?:\d\.?)+)\.tar\.gz\': \'([a-f0-9]{32})\',$', l).groups()
+                name, version, md5sum = re.match(r'^\'([a-z]+)?-((?:\d\.?)+)\.(?:tar\.gz|zip)\': \'([a-f0-9]{32})\',$', l).groups()
                 files[name] = {
                     'version': version,
                     'md5sum': md5sum,
