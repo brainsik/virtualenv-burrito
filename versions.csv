@@ -1,5 +1,5 @@
 _virtualenv-burrito,2.7.1,https://raw.githubusercontent.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.py,8cf9ca1752c9e459d9a39a87bd6817f252304068
-setuptools,39.1.0,https://files.pythonhosted.org/packages/a6/5b/f399fcffb9128d642387133dc3aa9bb81f127b949cd4d9f63e5602ad1d71/setuptools-39.1.0.zip,0c0ded0dd58320ff862f2f495f36d0e44875f8b4
-pip,10.0.1,https://files.pythonhosted.org/packages/ae/e8/2340d46ecadb1692a1e455f13f75e596d4eab3d11a57446f08259dee8f02/pip-10.0.1.tar.gz,b5ed40805e5bedb8e992c618a24dbe88cb85ae70
-virtualenv,16.0.0,https://files.pythonhosted.org/packages/33/bc/fa0b5347139cd9564f0d44ebd2b147ac97c36b2403943dbee8a25fd74012/virtualenv-16.0.0.tar.gz,33831525c360459671d25f9e5abac931c414d2f7
-virtualenvwrapper,4.8.2,https://files.pythonhosted.org/packages/dc/bf/5ea6941c9511bb0ae842e673e6ac2dc6811b9078ae14ac04ccf050ab6cc6/virtualenvwrapper-4.8.2.tar.gz,0ee03a05255fe2f529dc518010148a1d2ec5f088
+setuptools,40.8.0,https://files.pythonhosted.org/packages/c2/f7/c7b501b783e5a74cf1768bc174ee4fb0a8a6ee5af6afa92274ff964703e0/setuptools-40.8.0.zip,3547552b1009283f7ae31fded32ad33ed160e671
+pip,19.0.2,https://files.pythonhosted.org/packages/4c/4d/88bc9413da11702cbbace3ccc51350ae099bb351febae8acc85fec34f9af/pip-19.0.2.tar.gz,8d56fb414e81d2ad34b7d368db5218f347f78896
+virtualenv,16.4.0,https://files.pythonhosted.org/packages/51/aa/c395a6e6eaaedfa5a04723b6446a1df783b16cca6fec66e671cede514688/virtualenv-16.4.0.tar.gz,641dfb817bb0d52069690f53d814b6d2fac14176
+virtualenvwrapper,4.8.4,https://files.pythonhosted.org/packages/c1/6b/2f05d73b2d2f2410b48b90d3783a0034c26afa534a4a95ad5f1178d61191/virtualenvwrapper-4.8.4.tar.gz,192ab781dfedb19175573a0960d9405978c2ed13
